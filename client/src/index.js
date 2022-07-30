@@ -1,12 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Chat } from "./chat/Chat";
 import "./index.scss";
-import Test from "./Test";
+import ChatRoom from "./chat/ChatRoom";
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Test />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
+root.render(<ChatRoom />);
