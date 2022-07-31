@@ -2,7 +2,6 @@ import { useRef, useContext } from "react";
 import { SocketContext } from "../utils/SocketContext";
 
 const SendBox = () => {
-  
   const { socket } = useContext(SocketContext);
 
   const messageRef = useRef();
@@ -10,11 +9,13 @@ const SendBox = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const messageField = messageRef.current;
-    socket.emit("broadcast_message", {
-      socketId: socket.id,
-      message: messageField.value,
-    });
-    messageField.value = "";
+    if (messageField.value) {
+      socket.emit("broadcast_message", {
+        socketId: socket.id,
+        text: messageField.value,
+      });
+      messageField.value = "";
+    }
   };
 
   return (

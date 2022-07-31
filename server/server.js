@@ -37,8 +37,10 @@ io.on("connection", (socket) => {
   // Ping a response from handshake
   socket.emit("connected");
 
-  socket.on("broadcast_message", ({ socketId, message }) => {
-    io.emit("receive_message", { socketId, message });
+  socket.on("broadcast_message", ({ socketId, text }) => {
+    const time = new Date();
+    const date = time.toLocaleString('en-US', { hour: 'numeric', hour12: true });
+    io.emit("receive_message", { socketId, date, text });
   });
 });
 

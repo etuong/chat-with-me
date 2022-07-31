@@ -1,96 +1,67 @@
-import React, { useEffect, useState } from "react";
 import { socket, SocketContext } from "../utils/SocketContext";
-import Features from "./Features";
+import ChatHeader from "./ChatHeader";
+import MyMessage from "./MyMessage";
+import React, { useEffect, useRef, useState } from "react";
 import SendBox from "./SendBox";
+import YourMessage from "./YourMessage";
 
 const Chat = () => {
-  const [name, setName] = useState("Ethan Uong");
-  const [isNameEdit, setIsNameEdit] = useState(false);
+  const chatBoxRef = useRef();
+
+  const [messages, setMessages] = useState([
+    { fromMe: true, date: "10:10 AM", text: "How are you?" },
+    {
+      fromMe: false,
+      date: "10:16 AM",
+      text: "I am fine, thank you for asking!",
+    },
+  ]);
 
   useEffect(() => {
+    chatBoxRef.current.addEventListener("DOMNodeInserted", (event) => {
+      const { currentTarget: target } = event;
+      target.scroll({ top: target.scrollHeight, behavior: "smooth" });
+    });
+
     socket.on("connect", () => {
       console.log("Handshake established!");
     });
 
-    socket.on("receive_message", ({ socketId, message }) => {
-      console.log({ socketId, message });
+    socket.on("receive_message", ({ socketId, date, text }) => {
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        {
+          fromMe: socketId === socket.id,
+          date,
+          text,
+        },
+      ]);
     });
-
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("pong");
-    };
   }, []);
+
+  // useEffect(() => {
+  //   // 👇️ scroll to bottom every time messages change
+  //   chatBoxRef.current.scrollIntoView({ behavior: "smooth" });
+  // }, [messages]);
 
   return (
     <SocketContext.Provider value={{ socket }}>
       <div className="chat">
-        <div className="chat-header clearfix">
-          <img
-            src="https://bootdey.com/img/Content/avatar/avatar1.png"
-            alt="avatar"
-          />
-          <div>
-            {isNameEdit ? (
-              <React.Fragment>
-                <input
-                  type="text"
-                  value={name}
-                  className="name edit"
-                  onChange={(e) => setName(e.target.value)}
-                  // onKeyUp={(e) => {
-                  //   const field = e.target;
-                  //   field.style.width = (field.value.length + 5) * 8 + "px";
-                  // }}
-                />
-                <span
-                  className="pencil"
-                  onClick={(_) => setIsNameEdit(!isNameEdit)}
-                >
-                  &#9998;
-                </span>
-              </React.Fragment>
-            ) : (
-              <div className="name">
-                {name}
-                <span
-                  className="pencil"
-                  onClick={(_) => setIsNameEdit(!isNameEdit)}
-                >
-                  &#9998;
-                </span>
-              </div>
-            )}
-          </div>
-          <Features />
-        </div>
+        <ChatHeader />
 
-        <div className="chat-history">
+        <div className="chat-history" ref={chatBoxRef}>
           <ul className="m-b-0">
-            <li className="clearfix">
-              <div className="message-data text-right">
-                <span className="message-data-time">10:10 AM</span>
-                <img
-                  src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                  alt="avatar"
-                />
-              </div>
-              <div className="message my-message float-right">
-                Hi Aiden, how are you? How is the project coming along?{" "}
-              </div>
-            </li>
-
-            <li className="clearfix">
-              <div className="message-data">
-                <img
-                  src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                  alt="avatar"
-                />
-                <span className="message-data-time">10:12 AM</span>
-              </div>
-              <div className="message other-message">Are we meeting today?</div>
-            </li>
+            {messages.map((message, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {message.fromMe ? (
+                    <MyMessage message={message} />
+                  ) : (
+                    <YourMessage message={message} />
+                  )}
+                </React.Fragment>
+              );
+            })}
           </ul>
         </div>
 
