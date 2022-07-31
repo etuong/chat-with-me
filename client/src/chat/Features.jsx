@@ -1,6 +1,6 @@
 const Features = () => {
   return (
-    <div className="col-lg-6 hidden-sm text-right">
+    <div className="text-right features">
       <button className="btn btn-outline-secondary">
         <i className="fa fa-camera"></i>
       </button>

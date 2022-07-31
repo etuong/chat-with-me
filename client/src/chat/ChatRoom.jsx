@@ -4,7 +4,7 @@ import Chat from "./Chat";
 const ChatRoom = () => {
   return (
     <div className="chat-app">
-      <ChannelList />
+      {/* <ChannelList /> */}
       <Chat />
     </div>
   );

@@ -3,7 +3,6 @@ const logger = require("morgan");
 const cors = require("cors");
 const app = express();
 const server = require("http").createServer(app);
-const Constant = require("./Constants");
 
 app.use(logger("dev"));
 app.use(cors());
@@ -26,7 +25,7 @@ server.listen(port, () => {
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: ["http://localhost:8080", "https://etuong.github.io"],
+    origin: ["http://localhost:3000", "https://etuong.github.io"],
     credentials: true,
   },
   transports: ["polling", "websocket"],
@@ -37,6 +36,10 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   // Ping a response from handshake
   socket.emit("connected");
+
+  socket.on("broadcast_message", ({ socketId, message }) => {
+    io.emit("receive_message", { socketId, message });
+  });
 });
 
 process.on("exit", function (code) {

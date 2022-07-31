@@ -7,11 +7,7 @@ const Participant = (props) => {
         src="https://bootdey.com/img/Content/avatar/avatar1.png"
         alt="avatar"
       />
-      {props.showName && (
-        <div className="about">
-          <div className="name">Vincent Porter</div>
-        </div>
-      )}
+      {props.showName && <div className="name">Vincent Porter</div>}
     </React.Fragment>
   );
 };

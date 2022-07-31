@@ -13,46 +13,7 @@ const ChannelList = () => {
         </li>
         <li className="clearfix">
           <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>{" "}
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>{" "}
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>{" "}
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>{" "}
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
-        <li className="clearfix">
-          <Participant showName={true} />
-        </li>
+        </li>        
       </ul>
     </div>
   );
