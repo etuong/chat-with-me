@@ -2,7 +2,7 @@ class Participant {
   constructor(id, name, picture) {
     this.id = id; // Participant ID is same as socket ID
     this.name = name;
-    this.picture = picture ?? name.charAt(0).toUpperCase();
+    this.picture = picture ?? name?.charAt(0).toUpperCase();
   }
 }
 

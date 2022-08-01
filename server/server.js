@@ -49,8 +49,8 @@ io.on("connection", (socket) => {
   // Ping a response from handshake
   socket.emit("connected");
 
-  const { name, picture } = socket.handshake.participant;
-
+  const { name, picture } = socket.handshake.query;
+  
   const participant = addParticipant(socket.id, name, picture);
   io.emit(USER_JOIN, participant);
 

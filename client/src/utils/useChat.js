@@ -45,11 +45,11 @@ const useChat = () => {
     } else {
       setParticipant({
         name: `Participant ${participants.length + 1}`,
-        picture: "P",
+        picture: "",
       });
     }
 
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL, { participant });
+    socketRef.current = socketIOClient(SOCKET_SERVER_URL, { query: participant });
 
     socketRef.current.on("connect", () => {
       console.log("Handshake established!");

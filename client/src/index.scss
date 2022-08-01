@@ -39,6 +39,12 @@ body,
       display: flex;
       align-items: center;
 
+      [type="file"] {
+        height: 0;
+        width: 0;
+        overflow: hidden;
+      }
+
       span.pencil {
         cursor: pointer;
         margin: 0px 5px;
@@ -65,19 +71,20 @@ body,
 
       .profile {
         position: relative;
-        height: 60px;
-        width: 60px;
         cursor: pointer;
 
         img {
-          float: left;
+          border: 1px solid black;
+          height: 60px;
+          width: 60px;
           border-radius: 50%;
-          width: 100%;
+          overflow: hidden;
         }
-        span {
+
+        i.camera {
           position: absolute;
-          bottom: -10px;
-          left: 20px;
+          top: 4px;
+          left: 4px;
           border-radius: 50%;
           display: flex;
           background-color: white;

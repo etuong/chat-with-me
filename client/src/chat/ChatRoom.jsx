@@ -46,7 +46,7 @@ const Chat = () => {
 
         <div className="chat-history" ref={chatBoxRef}>
           <ul className="m-b-0">
-            {messages.map((message, index) => {
+            {messages && messages.map((message, index) => {
               return (
                 <React.Fragment key={index}>
                   {message.fromMe ? (
@@ -57,7 +57,7 @@ const Chat = () => {
                 </React.Fragment>
               );
             })}
-            {typingUsers.map((user, index) => (
+            {typingUsers && typingUsers.map((user, index) => (
               <li key={index}>
                 <MessageTyping user={user} />
               </li>
