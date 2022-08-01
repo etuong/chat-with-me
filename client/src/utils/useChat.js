@@ -21,6 +21,7 @@ const useChat = () => {
   const socketRef = useRef();
 
   useEffect(() => {
+    // At the initial load, get all existing messages in memory
     const fetchMessages = async () => {
       const response = await axios.get(`${SOCKET_SERVER_URL}/messages`);
       const result = response.data.messages;
@@ -28,26 +29,27 @@ const useChat = () => {
     };
     fetchMessages();
 
+    // At the initial load, get all current participants in the chat
     const fetchParticipants = async () => {
       const response = await axios.get(`${SOCKET_SERVER_URL}/participants`);
       const result = response.data.participants;
-      setParticipants(result);
+      setParticipants(result || []);
     };
     fetchParticipants();
 
-    let savedParticipant = localStorage.getItem("user");
+    // Restore "this" participant's info
+    let savedParticipant = localStorage.getItem("participant");
     if (savedParticipant) {
       savedParticipant = JSON.parse(savedParticipant);
       setParticipant(savedParticipant);
+    } else {
+      setParticipant({
+        name: `Participant ${participants.length + 1}`,
+        picture: "P",
+      });
     }
 
-    if (!participant) {
-      return;
-    }
-
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-      query: { name: participant.name, picture: participant.picture },
-    });
+    socketRef.current = socketIOClient(SOCKET_SERVER_URL, { participant });
 
     socketRef.current.on("connect", () => {
       console.log("Handshake established!");
@@ -98,7 +100,7 @@ const useChat = () => {
     if (!socketRef.current) return;
 
     socketRef.current.emit(NEW_MESSAGE, {
-      body: newMessage,
+      text: newMessage,
       senderId: socketRef.current.id,
       participant: participant,
     });

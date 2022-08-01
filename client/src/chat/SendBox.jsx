@@ -1,19 +1,13 @@
-import { useRef, useContext } from "react";
-import { SocketContext } from "../utils/SocketContext";
+import { useRef, memo } from "react";
 
-const SendBox = () => {
-  const { socket } = useContext(SocketContext);
-
+const SendBox = (props) => {
   const messageRef = useRef();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const messageField = messageRef.current;
     if (messageField.value) {
-      socket.emit("broadcast_message", {
-        socketId: socket.id,
-        text: messageField.value,
-      });
+      props.handleSendMessage(messageField.value);
       messageField.value = "";
     }
   };
@@ -32,6 +26,8 @@ const SendBox = () => {
             type="text"
             className="form-control"
             placeholder="Enter message here..."
+            onKeyPress={props.startTyping}
+            onKeyUp={props.stopTyping}
           />
         </div>
       </form>
@@ -39,4 +35,4 @@ const SendBox = () => {
   );
 };
 
-export default SendBox;
+export default memo(SendBox);

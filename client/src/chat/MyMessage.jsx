@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const MyMessage = (props) => {
   return (
     <li className="clearfix">
@@ -13,4 +15,4 @@ const MyMessage = (props) => {
   );
 };
 
-export default MyMessage;
+export default memo(MyMessage);

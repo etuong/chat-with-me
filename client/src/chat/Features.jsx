@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const Features = () => {
   return (
     <div className="text-right features">
@@ -17,4 +19,4 @@ const Features = () => {
   );
 };
 
-export default Features;
+export default memo(Features);

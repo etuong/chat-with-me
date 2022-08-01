@@ -1,12 +1,8 @@
 import Features from "./Features";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 
-const ChatHeader = (props) => {
-  const [name, setName] = useState(() => {
-    const saved = localStorage.getItem("name");
-    const initialValue = JSON.parse(saved);
-    return initialValue || "";
-  });
+const ChatHeader = ({ participant }) => {
+  const [name, setName] = useState(participant.name);
   const [isNameEdit, setIsNameEdit] = useState(false);
 
   const nameRef = useRef();
@@ -25,11 +21,8 @@ const ChatHeader = (props) => {
 
   return (
     <div className="chat-header clearfix">
-      <div class="profile">
-        <img
-          src="https://bootdey.com/img/Content/avatar/avatar1.png"
-          alt="avatar"
-        />
+      <div className="profile">
+        <img src={participant.picture} alt="avatar" />
         <span>&#128247;</span>
       </div>
       <div className="name">
@@ -37,12 +30,12 @@ const ChatHeader = (props) => {
           <input
             type="text"
             ref={nameRef}
-            value={name}
+            value={participant.name}
             className="editing"
             onChange={(e) => setName(e.target.value)}
           />
         ) : (
-          <>{name}</>
+          <>{participant.name}</>
         )}
         <span
           className={`pencil ${isNameEdit ? "edit" : "notEdit"}`}
@@ -58,4 +51,4 @@ const ChatHeader = (props) => {
   );
 };
 
-export default ChatHeader;
+export default memo(ChatHeader);

@@ -1,11 +1,78 @@
-import Chat from "./Chat";
+import React, { useEffect, useRef } from "react";
+import useChat from "../utils/useChat";
+import ChatHeader from "./ChatHeader";
+import MyMessage from "./MyMessage";
+import SendBox from "./SendBox";
+import YourMessage from "./YourMessage";
+import useTyping from "../utils/useTyping";
+import MessageTyping from "./MessageTyping";
 
-const ChatRoom = () => {
+const Chat = () => {
+  const chatBoxRef = useRef();
+
+  const {
+    messages,
+    participant,
+    participants,
+    typingUsers,
+    sendMessage,
+    startTypingMessage,
+    stopTypingMessage,
+  } = useChat();
+
+  const { isTyping, startTyping, stopTyping, cancelTyping } = useTyping();
+
+  const handleSendMessage = (newMessage) => {
+    cancelTyping();
+    sendMessage(newMessage);
+  };
+
+  useEffect(() => {
+    if (isTyping) startTypingMessage();
+    else stopTypingMessage();
+  }, [isTyping]);
+
+  useEffect(() => {
+    chatBoxRef.current.addEventListener("DOMNodeInserted", (event) => {
+      const { currentTarget: target } = event;
+      target.scroll({ top: target.scrollHeight, behavior: "smooth" });
+    });
+  }, []);
+
   return (
     <div className="chat-app">
-      <Chat />
+      <div className="chat">
+        <ChatHeader participant={participant}/>
+
+        <div className="chat-history" ref={chatBoxRef}>
+          <ul className="m-b-0">
+            {messages.map((message, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {message.fromMe ? (
+                    <MyMessage message={message} />
+                  ) : (
+                    <YourMessage message={message} />
+                  )}
+                </React.Fragment>
+              );
+            })}
+            {typingUsers.map((user, index) => (
+              <li key={index}>
+                <MessageTyping user={user} />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <SendBox
+          handleSendMessage={handleSendMessage}
+          startTyping={startTyping}
+          stopTyping={stopTyping}
+        />
+      </div>
     </div>
   );
 };
 
-export default ChatRoom;
+export default Chat;
