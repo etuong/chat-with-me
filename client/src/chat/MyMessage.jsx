@@ -5,11 +5,11 @@ const MyMessage = (props) => {
   return (
     <li className="clearfix">
       <div className="message-data text-right">
-        <span className="message-data-time">{props.message.date}</span>
-        <img
-          src="https://bootdey.com/img/Content/avatar/avatar1.png"
-          alt="avatar"
-        />
+        <span className="message-data-time">2022-08-01</span>
+        <div
+          className="sender"
+          style={{ backgroundImage: `url(${props.message.sender.profilePic})` }}
+        ></div>
       </div>
       <div className="message my-message float-right">{props.message.text}</div>
     </li>

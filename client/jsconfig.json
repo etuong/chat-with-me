@@ -3,7 +3,7 @@
         "module": "ES6",
         "jsx": "react",
         "checkJs": true,
-        "baseUrl": ".",
+        "baseUrl": "./src"
     },
     "exclude": [
         "node_modules",

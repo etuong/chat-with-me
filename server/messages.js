@@ -2,8 +2,8 @@ var uuid = require("uuid");
 
 const messages = [];
 
-const addMessage = (message) => {
-  const msg = { id: uuid.v4(), ...message };
+const addMessage = (sender, text) => {
+  const msg = { id: uuid.v4(), sender, text };
   messages.push(msg);
   return msg;
 };

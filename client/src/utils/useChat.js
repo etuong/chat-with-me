@@ -8,6 +8,7 @@ const USER_LEAVE = "USER_LEAVE";
 const NEW_MESSAGE = "NEW_MESSAGE";
 const START_TYPING = "START_TYPING";
 const STOP_TYPING = "STOP_TYPING";
+const UPDATE_PARTICIPANT_PROFILE = "UPDATE_PARTICIPANT_PROFILE";
 
 const SOCKET_SERVER_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
@@ -28,7 +29,6 @@ const useChat = () => {
       const result = response.data.messages;
       setMessages(result);
     };
-    fetchMessages();
 
     // At the initial load, get all current participants in the chat
     const fetchParticipants = async () => {
@@ -36,68 +36,106 @@ const useChat = () => {
       const result = response.data.participants;
       setParticipants(result || []);
     };
-    fetchParticipants();
 
-    // Restore "this" participant's info
-    let savedParticipant = localStorage.getItem("participant");
-    if (savedParticipant) {
-      savedParticipant = JSON.parse(savedParticipant);
-      setParticipant(savedParticipant);
-    } else {
-      setParticipant({
-        name: `Participant ${participants.length + 1}`,
-        picture: "",
+    const fetchSocket = async () => {
+      socketRef.current = socketIOClient(SOCKET_SERVER_URL);
+
+      // Restore "this" participant's info
+      let chatter = undefined; //localStorage.getItem("participant");
+      if (chatter) {
+        chatter = JSON.parse(chatter);
+      } else {
+        chatter = {
+          name: `Participant ${Math.floor(Math.random() * 100)}`,
+          profilePic: "",
+        };
+      }
+      socketRef.current.emit(USER_JOIN, chatter);
+
+      socketRef.current.on("connect", () => {
+        console.log("Handshake established!");
       });
-    }
 
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-      query: participant,
-    });
+      socketRef.current.on(USER_JOIN, (newParticipant) => {
+        if (newParticipant.id === socketRef.current.id) {
+          setParticipant(newParticipant);
+        } else {
+          setParticipants((participants) => [...participants, newParticipant]);
+        }
+      });
 
-    socketRef.current.on("connect", () => {
-      console.log("Handshake established!");
-    });
+      socketRef.current.on(UPDATE_PARTICIPANT_PROFILE, (updatedParticipant) => {
+        const newList = participants.map((participant) => {
+          if (participant.id === updatedParticipant.id) {
+            const updatedItem = {
+              ...participant,
+              name: updatedParticipant.name,
+              profilePic: updatedParticipant.profilePic,
+            };
 
-    socketRef.current.on(USER_JOIN, (participant) => {
-      if (participant.id === socketRef.current.id) return;
-      setParticipants((participants) => [...participants, participant]);
-    });
+            return updatedItem;
+          }
 
-    socketRef.current.on(USER_LEAVE, (participant) => {
-      setParticipants((participants) =>
-        participants.filter((p) => p.id !== participant.id)
-      );
-    });
+          return participant;
+        });
 
-    socketRef.current.on(NEW_MESSAGE, (message) => {
-      const incomingMessage = {
-        ...message,
-        fromMe: message.senderId === socketRef.current.id,
-      };
+        setParticipants(newList);
+      });
 
-      setMessages((currentMessages) => [...currentMessages, incomingMessage]);
-    });
-
-    socketRef.current.on(START_TYPING, (typingInfo) => {
-      if (typingInfo.senderId !== socketRef.current.id) {
-        const participant = typingInfo.participant;
-        setTypingParticipants((participants) => [...participants, participant]);
-      }
-    });
-
-    socketRef.current.on(STOP_TYPING, (typingInfo) => {
-      if (typingInfo.senderId !== socketRef.current.id) {
-        const participant = typingInfo.participant;
-        setTypingParticipants((participants) =>
-          participants.filter((p) => p.name !== participant.name)
+      socketRef.current.on(USER_LEAVE, (participant) => {
+        setParticipants((participants) =>
+          participants.filter((p) => p.id !== participant.id)
         );
-      }
-    });
+      });
 
-    return () => {
-      socketRef.current.disconnect();
+      socketRef.current.on(NEW_MESSAGE, ({ sender, text }) => {
+        const incomingMessage = {
+          sender,
+          text,
+          fromMe: sender.id === socketRef.current.id,
+        };
+
+        setMessages((currentMessages) => [...currentMessages, incomingMessage]);
+      });
+
+      socketRef.current.on(START_TYPING, (typingInfo) => {
+        if (typingInfo.senderId !== socketRef.current.id) {
+          const participant = typingInfo.participant;
+          setTypingParticipants((participants) => [
+            ...participants,
+            participant,
+          ]);
+        }
+      });
+
+      socketRef.current.on(STOP_TYPING, (typingInfo) => {
+        if (typingInfo.senderId !== socketRef.current.id) {
+          const participant = typingInfo.participant;
+          setTypingParticipants((participants) =>
+            participants.filter((p) => p.name !== participant.name)
+          );
+        }
+      });
+
+      return () => {
+        socketRef.current.disconnect();
+      };
     };
+
+    fetchMessages();
+    fetchParticipants();
+    fetchSocket();
   }, []);
+
+  useEffect(() => {
+    updateParticipantProfile();
+  }, [participant]);
+
+  const updateParticipantProfile = () => {
+    if (!socketRef.current) return;
+
+    socketRef.current.emit(UPDATE_PARTICIPANT_PROFILE, participant);
+  };
 
   const sendMessage = (newMessage) => {
     if (!socketRef.current) return;
@@ -105,7 +143,6 @@ const useChat = () => {
     socketRef.current.emit(NEW_MESSAGE, {
       text: newMessage,
       senderId: socketRef.current.id,
-      participant: participant,
     });
   };
 
@@ -135,6 +172,7 @@ const useChat = () => {
     sendMessage,
     startTypingMessage,
     stopTypingMessage,
+    setParticipant,
   };
 };
 

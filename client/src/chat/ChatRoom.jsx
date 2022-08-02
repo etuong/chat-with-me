@@ -18,6 +18,7 @@ const Chat = () => {
     sendMessage,
     startTypingMessage,
     stopTypingMessage,
+    setParticipant,
   } = useChat();
 
   const { isTyping, startTyping, stopTyping, cancelTyping } = useTyping();
@@ -42,26 +43,28 @@ const Chat = () => {
   return (
     <div className="chat-app">
       <div className="chat">
-        <ChatHeader participant={participant}/>
+        <ChatHeader participant={participant} setParticipant={setParticipant} />
 
         <div className="chat-history" ref={chatBoxRef}>
           <ul className="m-b-0">
-            {messages && messages.map((message, index) => {
-              return (
-                <React.Fragment key={index}>
-                  {message.fromMe ? (
-                    <MyMessage message={message} />
-                  ) : (
-                    <YourMessage message={message} />
-                  )}
-                </React.Fragment>
-              );
-            })}
-            {typingUsers && typingUsers.map((user, index) => (
-              <li key={index}>
-                <MessageTyping user={user} />
-              </li>
-            ))}
+            {messages &&
+              messages.map((message, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    {message.fromMe ? (
+                      <MyMessage message={message} />
+                    ) : (
+                      <YourMessage message={message} />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            {typingUsers &&
+              typingUsers.map((user, index) => (
+                <li key={index}>
+                  <MessageTyping user={user} />
+                </li>
+              ))}
           </ul>
         </div>
 

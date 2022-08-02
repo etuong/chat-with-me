@@ -6,6 +6,7 @@ const server = require("http").createServer(app);
 const {
   addParticipant,
   removeParticipant,
+  getParticipant,
   getParticipants,
 } = require("./participants");
 const { addMessage, getMessages } = require("./messages");
@@ -34,6 +35,7 @@ const USER_LEAVE = "USER_LEAVE";
 const NEW_MESSAGE = "NEW_MESSAGE";
 const START_TYPING = "START_TYPING";
 const STOP_TYPING = "STOP_TYPING";
+const UPDATE_PARTICIPANT_PROFILE = "UPDATE_PARTICIPANT_PROFILE";
 
 const io = require("socket.io")(server, {
   cors: {
@@ -49,14 +51,24 @@ io.on("connection", (socket) => {
   // Ping a response from handshake
   socket.emit("connected");
 
-  const { name, picture } = socket.handshake.query;
-  
-  const participant = addParticipant(socket.id, name, picture);
-  io.emit(USER_JOIN, participant);
+  socket.on(USER_JOIN, (data) => {
+    const { name, profilePic } = data;
+    const participant = addParticipant(socket.id, name, profilePic);
+    io.emit(USER_JOIN, participant);
+  });
 
+  // Payload data contains the sender ID and text
   socket.on(NEW_MESSAGE, (data) => {
-    const message = addMessage(data);
+    const sender = getParticipant(data.senderId);
+    const message = addMessage(sender, data.text);
     io.emit(NEW_MESSAGE, message);
+  });
+
+  socket.on(UPDATE_PARTICIPANT_PROFILE, (updatedParticipant) => {
+    const participant = getParticipant(updatedParticipant.id);
+    participant.name = updatedParticipant.name;
+    participant.profilePic = updatedParticipant.profilePic;
+    io.emit(START_TYPING, data);
   });
 
   socket.on(START_TYPING, (data) => {

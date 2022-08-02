@@ -70,23 +70,18 @@ body,
       }
 
       .profile {
+        width: 60px;
+        height: 60px;
+        border: 1px solid black;
+        background-position: center center;
+        background-size: cover;
+        border-radius: 50%;
         position: relative;
         cursor: pointer;
 
-        img {
-          border: 1px solid black;
-          height: 60px;
-          width: 60px;
-          border-radius: 50%;
-          overflow: hidden;
-        }
-
         i.camera {
           position: absolute;
-          top: 4px;
-          left: 4px;
           border-radius: 50%;
-          display: flex;
           background-color: white;
           box-shadow: 0 0 15px 2px lightcyan;
         }
@@ -119,18 +114,24 @@ body,
 
       .message-data {
         margin-bottom: 12px;
+        display:flex
 
-        img {
-          border-radius: 40px;
+        .sender {
           width: 40px;
+          height: 40px;
+          border: 1px solid black;
+          background-position: center center;
+          background-size: cover;
+          border-radius: 50%;
         }
-      }
 
-      .message-data-time {
-        color: #434651;
-        padding-left: 6px;
-        font-size: 10px;
-        margin: 5px;
+        .message-data-time {
+          color: #434651;
+          padding-left: 6px;
+          font-size: 10px;
+          margin: 5px;
+          align-self:center;
+        }
       }
       .message {
         color: #444;

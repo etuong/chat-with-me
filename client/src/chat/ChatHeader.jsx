@@ -1,13 +1,19 @@
-import React, { useEffect, useRef, memo, useState,   } from "react";
+import React, { useEffect, useRef, memo, useState } from "react";
 import Features from "./Features";
 
-const ChatHeader = ({ participant }) => {
-  const [name, setName] = useState();
+const ChatHeader = ({ participant, setParticipant }) => {
+  const [name, setName] = useState("");
   const [isNameEdit, setIsNameEdit] = useState(false);
-
+  const [profilePic, setProfilePic] = useState("");
   const imageInputRef = useRef(null);
-  const imageRef = useRef(null);
   const nameRef = useRef(null);
+
+  useEffect(() => {
+    if (participant) {
+      setName(participant.name);
+      setProfilePic(participant.profilePic);
+    }
+  }, [participant]);
 
   useEffect(() => {
     const element = imageInputRef.current;
@@ -30,21 +36,37 @@ const ChatHeader = ({ participant }) => {
   }, [isNameEdit]);
 
   useEffect(() => {
-    if (participant) {
-      setName(participant.name);
+    if (name && profilePic) {
+      localStorage.setItem("participant", JSON.stringify({ name, profilePic }));
+      setParticipant({ name, profilePic });
     }
-  }, [participant]);
-
-  useEffect(() => {
-    localStorage.setItem("name", JSON.stringify(name));
-  }, [name]);
+  }, [name, profilePic]);
 
   const handleImageChange = (_) => {
     imageInputRef.current.click();
   };
+
+  const uploadImage = (file) => {
+    const data = new FormData();
+    const cloudName = process.env.REACT_APP_CLOUNDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.REACT_APP_CLOUNDINARY_UPLOAD_PRESET;
+    data.append("file", file);
+    data.append("upload_preset", uploadPreset);
+    data.append("cloud_name", cloudName);
+    fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setProfilePic(data.secure_url);
+      })
+      .catch((err) => console.log(err));
+  };
+
   function getImageData() {
     const file = imageInputRef.current.files[0];
-    imageRef.current.src = window.URL.createObjectURL(file);
+    uploadImage(file);
   }
 
   return (
@@ -58,13 +80,11 @@ const ChatHeader = ({ participant }) => {
       />
       {participant && (
         <>
-          <div className="profile" htmlFor="choose-file">
-            <img
-              ref={imageRef}
-              onClick={handleImageChange}
-              src={participant.picture}
-              alt=""
-            />
+          <div
+            className="profile"
+            onClick={handleImageChange}
+            style={{ backgroundImage: `url(${profilePic})` }}
+          >
             <i className="camera fa fa-camera"></i>
           </div>
           <div className="name">

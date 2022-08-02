@@ -1,25 +1,25 @@
 class Participant {
-  constructor(id, name, picture) {
+  constructor(id, name, profilePic) {
     this.id = id; // Participant ID is same as socket ID
     this.name = name;
-    this.picture = picture ?? name?.charAt(0).toUpperCase();
+    this.profilePic = profilePic;
   }
 }
 
 const participants = [];
 
-const addParticipant = (id, name, picture) => {
+const addParticipant = (id, name, profilePic) => {
   const existingParticipant = participants.find(
     (participant) => participant.name === name
   );
 
-  if (existingParticipant) return { error: "Participantname is taken." };
+  if (existingParticipant) return { error: "Participant name is taken." };
 
-  const participant = new Participant(id, name, picture);
+  const participant = new Participant(id, name, profilePic);
 
   participants.push(participant);
 
-  return { id, name: participant.name, picture: participant.picture };
+  return { id, name: participant.name, profilePic: participant.profilePic };
 };
 
 const removeParticipant = (id) => {
