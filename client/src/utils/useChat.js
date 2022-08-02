@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 import axios from "axios";
@@ -17,7 +18,7 @@ const useChat = () => {
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [typingParticipants, setTypingParticipants] = useState([]);
-  const [participant, setParticipant] = useState();
+  const [participant, setParticipant] = useState({});
   const socketRef = useRef();
 
   useEffect(() => {
@@ -49,7 +50,9 @@ const useChat = () => {
       });
     }
 
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL, { query: participant });
+    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
+      query: participant,
+    });
 
     socketRef.current.on("connect", () => {
       console.log("Handshake established!");

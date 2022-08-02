@@ -1,5 +1,5 @@
+import React, { useEffect, useRef, memo, useState,   } from "react";
 import Features from "./Features";
-import React, { useEffect, useRef, useState, memo } from "react";
 
 const ChatHeader = ({ participant }) => {
   const [name, setName] = useState();
@@ -11,6 +11,7 @@ const ChatHeader = ({ participant }) => {
 
   useEffect(() => {
     const element = imageInputRef.current;
+
     if (element) {
       element.addEventListener("change", getImageData);
 

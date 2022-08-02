@@ -1,3 +1,4 @@
+import React from "react";
 import { useRef, memo } from "react";
 
 const SendBox = (props) => {
@@ -6,7 +7,7 @@ const SendBox = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const messageField = messageRef.current;
-    if (messageField.value) {
+    if (messageField && messageField.value) {
       props.handleSendMessage(messageField.value);
       messageField.value = "";
     }
