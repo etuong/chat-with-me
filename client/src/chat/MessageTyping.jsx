@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 const TypingAnimation = () => {
   return (
-    <div className="dotsContainer">
+    <div className="dots-container">
       <span id="dot1"></span>
       <span id="dot2"></span>
       <span id="dot3"></span>
@@ -10,17 +10,15 @@ const TypingAnimation = () => {
   );
 };
 
-const MessageTyping = ({ user }) => {
+const MessageTyping = ({ typist }) => {
   return (
     <div className="message-item">
-      <div className="message-avatar-container">
-        <img
-          src={user.picture}
-          alt={user.name}
-          className={"message-avatar"}
-        ></img>
-      </div>
-
+      <div
+        className="message-avatar"
+        style={{
+          backgroundImage: `url(${typist?.profilePic})`,
+        }}
+      ></div>
       <TypingAnimation></TypingAnimation>
     </div>
   );

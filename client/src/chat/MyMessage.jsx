@@ -3,15 +3,18 @@ import { memo } from "react";
 
 const MyMessage = (props) => {
   return (
-    <li className="clearfix">
+    <li className="clearfix flush-right">
+      <div className="message my-message">{props.message.text}</div>
       <div className="message-data justify-right">
-        <span className="message-data-time">2022-08-01</span>
+        <span className="message-data-time">{props.message.dateTime}</span>
+        <span className="message-data-sender-name">{props.message.sender?.name}</span>
         <div
           className="sender"
-          style={{ backgroundImage: `url(${props.message.sender?.profilePic})` }}
+          style={{
+            backgroundImage: `url(${props.message.sender?.profilePic})`,
+          }}
         ></div>
       </div>
-      <div className="message my-message float-right">{props.message.text}</div>
     </li>
   );
 };

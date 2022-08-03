@@ -7,7 +7,7 @@ const useTyping = () => {
 
   const startTyping = () => {
     setIsKeyPressed(true);
-    setCountdown(5);
+    setCountdown(3);
     setIsTyping(true);
   };
 

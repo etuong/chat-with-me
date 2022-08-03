@@ -87,15 +87,18 @@ const useChat = () => {
       });
 
       socketRef.current.on(USER_LEAVE, (participant) => {
-        setParticipants((participants) =>
-          participants.filter((p) => p.id !== participant.id)
-        );
+        if (participants.length > 0) {
+          setParticipants((participants) =>
+            participants.filter((p) => p.id !== participant.id)
+          );
+        }
       });
 
-      socketRef.current.on(NEW_MESSAGE, ({ sender, text }) => {
+      socketRef.current.on(NEW_MESSAGE, ({ sender, text, dateTime }) => {
         const incomingMessage = {
           sender,
           text,
+          dateTime,
           fromMe: sender.id === socketRef.current.id,
         };
 
@@ -113,7 +116,11 @@ const useChat = () => {
       });
 
       socketRef.current.on(STOP_TYPING, (typingInfo) => {
-        if (typingInfo.senderId !== socketRef.current.id) {
+        if (
+          typingInfo &&
+          typingInfo.participant &&
+          typingInfo.senderId !== socketRef.current.id
+        ) {
           const participant = typingInfo.participant;
           setTypingParticipants((participants) =>
             participants.filter((p) => p.name !== participant.name)

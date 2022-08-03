@@ -14,7 +14,7 @@ const Chat = () => {
     messages,
     participant,
     participants,
-    typingUsers,
+    typingParticipants,
     sendMessage,
     startTypingMessage,
     stopTypingMessage,
@@ -28,10 +28,10 @@ const Chat = () => {
     sendMessage(newMessage);
   };
 
-  // useEffect(() => {
-  //   if (isTyping) startTypingMessage();
-  //   else stopTypingMessage();
-  // }, [isTyping]);
+  useEffect(() => {
+    if (isTyping) startTypingMessage();
+    else stopTypingMessage();
+  }, [isTyping]);
 
   useEffect(() => {
     chatBoxRef.current.addEventListener("DOMNodeInserted", (event) => {
@@ -43,7 +43,10 @@ const Chat = () => {
   return (
     <div className="chat-app">
       <div className="chat">
-        <ChatHeader participant={participant} updateParticipantProfile={updateParticipantProfile} />
+        <ChatHeader
+          participant={participant}
+          updateParticipantProfile={updateParticipantProfile}
+        />
 
         <div className="chat-history" ref={chatBoxRef}>
           <ul className="m-b-0">
@@ -59,10 +62,10 @@ const Chat = () => {
                   </React.Fragment>
                 );
               })}
-            {typingUsers &&
-              typingUsers.map((user, index) => (
+            {typingParticipants &&
+              typingParticipants.map((typist, index) => (
                 <li key={index}>
-                  <MessageTyping user={user} />
+                  <MessageTyping typist={typist} />
                 </li>
               ))}
           </ul>
