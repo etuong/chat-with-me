@@ -19,7 +19,7 @@ const useChat = () => {
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [typingParticipants, setTypingParticipants] = useState([]);
-  const [participant, setParticipant] = useState({});
+  const [participant, setParticipant] = useState(undefined);
   const socketRef = useRef();
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const useChat = () => {
       socketRef.current = socketIOClient(SOCKET_SERVER_URL);
 
       // Restore "this" participant's info
-      let chatter = undefined; //localStorage.getItem("participant");
+      let chatter = localStorage.getItem("participant");
       if (chatter) {
         chatter = JSON.parse(chatter);
       } else {
@@ -65,21 +65,25 @@ const useChat = () => {
       });
 
       socketRef.current.on(UPDATE_PARTICIPANT_PROFILE, (updatedParticipant) => {
-        const newList = participants.map((participant) => {
-          if (participant.id === updatedParticipant.id) {
-            const updatedItem = {
-              ...participant,
-              name: updatedParticipant.name,
-              profilePic: updatedParticipant.profilePic,
-            };
+        if (updatedParticipant.id === socketRef.current.id) {
+          setParticipant(updatedParticipant);
+        } else {
+          const newList = participants.map((participant) => {
+            if (participant.id === updatedParticipant.id) {
+              const updatedItem = {
+                ...participant,
+                name: updatedParticipant.name,
+                profilePic: updatedParticipant.profilePic,
+              };
 
-            return updatedItem;
-          }
+              return updatedItem;
+            }
 
-          return participant;
-        });
+            return participant;
+          });
 
-        setParticipants(newList);
+          setParticipants(newList);
+        }
       });
 
       socketRef.current.on(USER_LEAVE, (participant) => {
@@ -127,14 +131,10 @@ const useChat = () => {
     fetchSocket();
   }, []);
 
-  useEffect(() => {
-    updateParticipantProfile();
-  }, [participant]);
-
-  const updateParticipantProfile = () => {
+  const updateParticipantProfile = ({ name, profilePic }) => {
     if (!socketRef.current) return;
-
-    socketRef.current.emit(UPDATE_PARTICIPANT_PROFILE, participant);
+    const updatedParticipant = { ...participant, name, profilePic };
+    socketRef.current.emit(UPDATE_PARTICIPANT_PROFILE, updatedParticipant);
   };
 
   const sendMessage = (newMessage) => {
@@ -172,7 +172,7 @@ const useChat = () => {
     sendMessage,
     startTypingMessage,
     stopTypingMessage,
-    setParticipant,
+    updateParticipantProfile,
   };
 };
 

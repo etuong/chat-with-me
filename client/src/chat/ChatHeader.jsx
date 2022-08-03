@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, memo, useState } from "react";
 import Features from "./Features";
 
-const ChatHeader = ({ participant, setParticipant }) => {
+const ChatHeader = ({ participant, updateParticipantProfile }) => {
   const [name, setName] = useState("");
   const [isNameEdit, setIsNameEdit] = useState(false);
   const [profilePic, setProfilePic] = useState("");
@@ -38,7 +38,7 @@ const ChatHeader = ({ participant, setParticipant }) => {
   useEffect(() => {
     if (name && profilePic) {
       localStorage.setItem("participant", JSON.stringify({ name, profilePic }));
-      setParticipant({ name, profilePic });
+      updateParticipantProfile({ name, profilePic });
     }
   }, [name, profilePic]);
 

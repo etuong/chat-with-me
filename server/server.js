@@ -44,7 +44,7 @@ const io = require("socket.io")(server, {
   },
   transports: ["polling", "websocket"],
   allowEIO3: true,
-  pingTimeout: 10000, // Shut down socket after 10 minutes of inactivity
+  pingTimeout: 30000, // Shut down socket after 30 minutes of inactivity
 });
 
 io.on("connection", (socket) => {
@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
     const participant = getParticipant(updatedParticipant.id);
     participant.name = updatedParticipant.name;
     participant.profilePic = updatedParticipant.profilePic;
-    io.emit(START_TYPING, data);
+    io.emit(START_TYPING, participant);
   });
 
   socket.on(START_TYPING, (data) => {
@@ -80,7 +80,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    removeParticipant(socket.id);
+    const participant = removeParticipant(socket.id);
     io.emit(USER_LEAVE, participant);
   });
 

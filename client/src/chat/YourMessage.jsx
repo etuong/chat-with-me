@@ -7,7 +7,7 @@ const YourMessage = (props) => {
       <div className="message-data">
         <div
           className="sender"
-          style={{ backgroundImage: `url(${props.message.sender.profilePic})` }}
+          style={{ backgroundImage: `url(${props.message.sender?.profilePic})` }}
         ></div>
         <span className="message-data-time">2022-08-01</span>
       </div>

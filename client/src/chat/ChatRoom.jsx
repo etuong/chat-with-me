@@ -18,7 +18,7 @@ const Chat = () => {
     sendMessage,
     startTypingMessage,
     stopTypingMessage,
-    setParticipant,
+    updateParticipantProfile,
   } = useChat();
 
   const { isTyping, startTyping, stopTyping, cancelTyping } = useTyping();
@@ -28,10 +28,10 @@ const Chat = () => {
     sendMessage(newMessage);
   };
 
-  useEffect(() => {
-    if (isTyping) startTypingMessage();
-    else stopTypingMessage();
-  }, [isTyping]);
+  // useEffect(() => {
+  //   if (isTyping) startTypingMessage();
+  //   else stopTypingMessage();
+  // }, [isTyping]);
 
   useEffect(() => {
     chatBoxRef.current.addEventListener("DOMNodeInserted", (event) => {
@@ -43,7 +43,7 @@ const Chat = () => {
   return (
     <div className="chat-app">
       <div className="chat">
-        <ChatHeader participant={participant} setParticipant={setParticipant} />
+        <ChatHeader participant={participant} updateParticipantProfile={updateParticipantProfile} />
 
         <div className="chat-history" ref={chatBoxRef}>
           <ul className="m-b-0">

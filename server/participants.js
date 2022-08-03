@@ -13,7 +13,7 @@ const addParticipant = (id, name, profilePic) => {
     (participant) => participant.name === name
   );
 
-  if (existingParticipant) return { error: "Participant name is taken." };
+ // if (existingParticipant) return { error: "Participant name is taken." };
 
   const participant = new Participant(id, name, profilePic);
 

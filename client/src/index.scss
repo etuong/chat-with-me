@@ -114,7 +114,7 @@ body,
 
       .message-data {
         margin-bottom: 12px;
-        display:flex
+        display: flex;
 
         .sender {
           width: 40px;
@@ -130,7 +130,7 @@ body,
           padding-left: 6px;
           font-size: 10px;
           margin: 5px;
-          align-self:center;
+          align-self: center;
         }
       }
       .message {
@@ -154,10 +154,10 @@ body,
           border-width: 10px;
           margin-left: -10px;
         }
-      }
 
-      .float-right {
-        float: right;
+        &.justify-right {
+          justify-content: end;
+        }
       }
 
       .other-message {
