@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
     const participant = getParticipant(updatedParticipant.id);
     participant.name = updatedParticipant.name;
     participant.profilePic = updatedParticipant.profilePic;
-    io.emit(START_TYPING, participant);
+    io.emit(UPDATE_PARTICIPANT_PROFILE, participant);
   });
 
   socket.on(START_TYPING, (data) => {
@@ -83,12 +83,6 @@ io.on("connection", (socket) => {
     const participant = removeParticipant(socket.id);
     io.emit(USER_LEAVE, participant);
   });
-
-  // socket.on("broadcast_message", ({ socketId, text }) => {
-  //   const time = new Date();
-  //   const date = time.toLocaleString('en-US', { hour: 'numeric', hour12: true });
-  //   io.emit("receive_message", { socketId, date, text });
-  // });
 });
 
 app.get("/participants", (req, res) => {

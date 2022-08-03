@@ -3,7 +3,15 @@ var uuid = require("uuid");
 const messages = [];
 
 const addMessage = (sender, text) => {
-  const msg = { id: uuid.v4(), sender, text };
+  const dateTime = new Date().toLocaleDateString("en-us", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    hour12: true,
+    minute: "numeric",
+  });
+  const msg = { id: uuid.v4(), sender, text, dateTime };
   messages.push(msg);
   return msg;
 };

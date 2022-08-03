@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from "react";
-import useChat from "../utils/useChat";
+import useChat from "../hooks/useChat";
 import ChatHeader from "./ChatHeader";
 import MyMessage from "./MyMessage";
 import SendBox from "./SendBox";
 import YourMessage from "./YourMessage";
-import useTyping from "../utils/useTyping";
+import useTyping from "../hooks/useTyping";
 import MessageTyping from "./MessageTyping";
 
 const Chat = () => {

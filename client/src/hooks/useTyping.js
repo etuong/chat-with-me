@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const useTyping = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isKeyPressed, setIsKeyPressed] = useState(false);
-  const [countdown, setCountdown] = useState(5);
+  const [countdown, setCountdown] = useState(3);
 
   const startTyping = () => {
     setIsKeyPressed(true);

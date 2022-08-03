@@ -2,7 +2,7 @@ class Participant {
   constructor(id, name, profilePic) {
     this.id = id; // Participant ID is same as socket ID
     this.name = name;
-    this.profilePic = profilePic;
+    this.profilePic = profilePic || "https://i.pravatar.cc/300";
   }
 }
 
@@ -13,7 +13,7 @@ const addParticipant = (id, name, profilePic) => {
     (participant) => participant.name === name
   );
 
- // if (existingParticipant) return { error: "Participant name is taken." };
+  // if (existingParticipant) return { error: "Participant name is taken." };
 
   const participant = new Participant(id, name, profilePic);
 

@@ -32,15 +32,21 @@ const ChatHeader = ({ participant, updateParticipantProfile }) => {
       const end = nameRef.current.value.length;
       nameRef.current.setSelectionRange(end, end);
       nameRef.current.focus();
+    } else if (name) {
+      handleProfileUpdate();
     }
   }, [isNameEdit]);
 
   useEffect(() => {
-    if (name && profilePic) {
-      localStorage.setItem("participant", JSON.stringify({ name, profilePic }));
-      updateParticipantProfile({ name, profilePic });
+    if (profilePic) {
+      handleProfileUpdate();
     }
-  }, [name, profilePic]);
+  }, [profilePic]);
+
+  const handleProfileUpdate = () => {
+    localStorage.setItem("participant", JSON.stringify({ name, profilePic }));
+    updateParticipantProfile({ name, profilePic });
+  };
 
   const handleImageChange = (_) => {
     imageInputRef.current.click();

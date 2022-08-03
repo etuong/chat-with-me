@@ -7,7 +7,9 @@ const MyMessage = (props) => {
       <div className="message my-message">{props.message.text}</div>
       <div className="message-data justify-right">
         <span className="message-data-time">{props.message.dateTime}</span>
-        <span className="message-data-sender-name">{props.message.sender?.name}</span>
+        <span className="message-data-sender-name">
+          {props.message.sender?.name}
+        </span>
         <div
           className="sender"
           style={{

@@ -19,7 +19,7 @@ const MessageTyping = ({ typist }) => {
           backgroundImage: `url(${typist?.profilePic})`,
         }}
       ></div>
-      <TypingAnimation></TypingAnimation>
+      <TypingAnimation />
     </div>
   );
 };

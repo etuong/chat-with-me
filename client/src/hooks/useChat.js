@@ -50,6 +50,7 @@ const useChat = () => {
           profilePic: "",
         };
       }
+
       socketRef.current.emit(USER_JOIN, chatter);
 
       socketRef.current.on("connect", () => {
@@ -58,7 +59,7 @@ const useChat = () => {
 
       socketRef.current.on(USER_JOIN, (newParticipant) => {
         if (newParticipant.id === socketRef.current.id) {
-          setParticipant(newParticipant);
+          setParticipant((participant) => ({ ...participant, newParticipant }));
         } else {
           setParticipants((participants) => [...participants, newParticipant]);
         }
@@ -69,19 +70,10 @@ const useChat = () => {
           setParticipant(updatedParticipant);
         } else {
           const newList = participants.map((participant) => {
-            if (participant.id === updatedParticipant.id) {
-              const updatedItem = {
-                ...participant,
-                name: updatedParticipant.name,
-                profilePic: updatedParticipant.profilePic,
-              };
-
-              return updatedItem;
-            }
-
-            return participant;
+            return participant.id === updatedParticipant.id
+              ? { ...updatedParticipant }
+              : participant;
           });
-
           setParticipants(newList);
         }
       });
@@ -106,7 +98,7 @@ const useChat = () => {
       });
 
       socketRef.current.on(START_TYPING, (typingInfo) => {
-        if (typingInfo.senderId !== socketRef.current.id) {
+        if (typingInfo && typingInfo.senderId !== socketRef.current.id) {
           const participant = typingInfo.participant;
           setTypingParticipants((participants) => [
             ...participants,
