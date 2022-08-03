@@ -9,7 +9,7 @@ const {
   getParticipant,
   getParticipants,
 } = require("./participants");
-const { addMessage, getMessages } = require("./messages");
+const { addMessage, getMessages, deleteAllMessages } = require("./messages");
 
 app.use(logger("dev"));
 app.use(cors());
@@ -93,6 +93,11 @@ app.get("/participants", (req, res) => {
 app.get("/messages", (req, res) => {
   const messages = getMessages();
   return res.json({ messages });
+});
+
+app.get("/delete-all-messages", (req, res) => {
+  deleteAllMessages();
+  res.status(200).send("All messages have been deleted!");
 });
 
 process.on("exit", function (code) {

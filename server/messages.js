@@ -1,6 +1,6 @@
 var uuid = require("uuid");
 
-const messages = [];
+let messages = [];
 
 const addMessage = (sender, text) => {
   const dateTime = new Date().toLocaleDateString("en-us", {
@@ -26,4 +26,7 @@ const getMessage = (id) => messages.find((message) => message.id === id);
 
 const getMessages = () => messages;
 
-module.exports = { addMessage, removeMessage, getMessage, getMessages };
+const deleteAllMessages = () => {
+  messages = [];
+};
+module.exports = { addMessage, getMessages, deleteAllMessages };

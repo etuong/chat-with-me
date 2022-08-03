@@ -34,7 +34,7 @@ const useChat = () => {
     const fetchParticipants = async () => {
       const response = await axios.get(`${SOCKET_SERVER_URL}/participants`);
       const result = response.data.participants;
-      setParticipants(result || []);
+      setParticipants(result);
     };
 
     const fetchSocket = async () => {
@@ -59,7 +59,7 @@ const useChat = () => {
 
       socketRef.current.on(USER_JOIN, (newParticipant) => {
         if (newParticipant.id === socketRef.current.id) {
-          setParticipant((participant) => ({ ...participant, newParticipant }));
+          setParticipant({ ...newParticipant });
         } else {
           setParticipants((participants) => [...participants, newParticipant]);
         }
@@ -67,7 +67,7 @@ const useChat = () => {
 
       socketRef.current.on(UPDATE_PARTICIPANT_PROFILE, (updatedParticipant) => {
         if (updatedParticipant.id === socketRef.current.id) {
-          setParticipant(updatedParticipant);
+          setParticipant({...updatedParticipant});
         } else {
           const newList = participants.map((participant) => {
             return participant.id === updatedParticipant.id

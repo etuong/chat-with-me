@@ -6,6 +6,7 @@ import SendBox from "./SendBox";
 import YourMessage from "./YourMessage";
 import useTyping from "../hooks/useTyping";
 import MessageTyping from "./MessageTyping";
+import Participants from "./Participants";
 
 const Chat = () => {
   const chatBoxRef = useRef();
@@ -47,6 +48,14 @@ const Chat = () => {
           participant={participant}
           updateParticipantProfile={updateParticipantProfile}
         />
+
+        {participants &&
+          participants.map((participant, index) => {
+            <Participants
+              profilePic={participant.profilePic}
+              name={participant.name}
+            />;
+          })}
 
         <div className="chat-history" ref={chatBoxRef}>
           <ul className="m-b-0">
