@@ -54,7 +54,10 @@ io.on("connection", (socket) => {
   socket.on(USER_JOIN, (data) => {
     const { name, profilePic } = data;
     const participant = addParticipant(socket.id, name, profilePic);
-    io.emit(USER_JOIN, participant);
+    if (participant) {
+      console.log(`${participant.name} has joined the chat`);
+      io.emit(USER_JOIN, participant);
+    }
   });
 
   // Payload data contains the sender ID and text
@@ -66,9 +69,11 @@ io.on("connection", (socket) => {
 
   socket.on(UPDATE_PARTICIPANT_PROFILE, (updatedParticipant) => {
     const participant = getParticipant(updatedParticipant.id);
-    participant.name = updatedParticipant.name;
-    participant.profilePic = updatedParticipant.profilePic;
-    io.emit(UPDATE_PARTICIPANT_PROFILE, participant);
+    if (participant) {
+      participant.name = updatedParticipant.name;
+      participant.profilePic = updatedParticipant.profilePic;
+      io.emit(UPDATE_PARTICIPANT_PROFILE, participant);
+    }
   });
 
   socket.on(START_TYPING, (data) => {
@@ -81,7 +86,10 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     const participant = removeParticipant(socket.id);
-    io.emit(USER_LEAVE, participant);
+    if (participant) {
+      console.log(`${participant.name} has left the chat`);
+      io.emit(USER_LEAVE, participant);
+    }
   });
 });
 

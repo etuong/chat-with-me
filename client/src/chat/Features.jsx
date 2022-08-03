@@ -1,10 +1,19 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
+import Picker from "emoji-picker-react";
 
 const Features = () => {
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+  };
+
   return (
     <div className="text-right features">
       <button className="btn btn-outline-secondary">
-        <i className="fa fa-camera"></i>
+        <i className="fa fa-camera">
+          <Picker onEmojiClick={onEmojiClick} />
+        </i>
       </button>
       <button className="btn btn-outline-primary">
         <i className="fa fa-image"></i>

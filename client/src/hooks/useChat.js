@@ -34,7 +34,7 @@ const useChat = () => {
     const fetchParticipants = async () => {
       const response = await axios.get(`${SOCKET_SERVER_URL}/participants`);
       const result = response.data.participants;
-      setParticipants(result);
+      setParticipants(result || []);
     };
 
     const fetchSocket = async () => {
@@ -62,27 +62,6 @@ const useChat = () => {
           setParticipant({ ...newParticipant });
         } else {
           setParticipants((participants) => [...participants, newParticipant]);
-        }
-      });
-
-      socketRef.current.on(UPDATE_PARTICIPANT_PROFILE, (updatedParticipant) => {
-        if (updatedParticipant.id === socketRef.current.id) {
-          setParticipant({...updatedParticipant});
-        } else {
-          const newList = participants.map((participant) => {
-            return participant.id === updatedParticipant.id
-              ? { ...updatedParticipant }
-              : participant;
-          });
-          setParticipants(newList);
-        }
-      });
-
-      socketRef.current.on(USER_LEAVE, (participant) => {
-        if (participants.length > 0) {
-          setParticipants((participants) =>
-            participants.filter((p) => p.id !== participant.id)
-          );
         }
       });
 
@@ -129,6 +108,29 @@ const useChat = () => {
     fetchParticipants();
     fetchSocket();
   }, []);
+
+  useEffect(() => {
+    socketRef.current.on(UPDATE_PARTICIPANT_PROFILE, (updatedParticipant) => {
+      if (updatedParticipant.id === socketRef.current.id) {
+        setParticipant({ ...updatedParticipant });
+      } else {
+        const newList = participants.map((participant) => {
+          return participant.id === updatedParticipant.id
+            ? { ...updatedParticipant }
+            : participant;
+        });
+        setParticipants(newList);
+      }
+    });
+
+    socketRef.current.on(USER_LEAVE, (participant) => {
+      if (participants.length > 0) {
+        setParticipants((participants) =>
+          participants.filter((p) => p.id !== participant.id)
+        );
+      }
+    });
+  }, [participants]);
 
   const updateParticipantProfile = ({ name, profilePic }) => {
     if (!socketRef.current) return;

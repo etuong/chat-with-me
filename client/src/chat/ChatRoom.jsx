@@ -49,13 +49,24 @@ const Chat = () => {
           updateParticipantProfile={updateParticipantProfile}
         />
 
-        {participants &&
-          participants.map((participant, index) => {
-            <Participants
-              profilePic={participant.profilePic}
-              name={participant.name}
-            />;
-          })}
+        {participants.length > 0 && (
+          <div className="chat-participants-container">
+            <h6 className="participants-title-desc">
+              Participants in the Chat
+            </h6>
+            <div className="chat-participants">
+              {participants.map((participant, index) => {
+                return (
+                  <Participants
+                    key={index}
+                    profilePic={participant.profilePic}
+                    name={participant.name}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         <div className="chat-history" ref={chatBoxRef}>
           <ul className="m-b-0">
