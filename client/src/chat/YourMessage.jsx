@@ -2,17 +2,29 @@ import React from "react";
 import { memo } from "react";
 
 const YourMessage = (props) => {
-  const cleanseMessage = props.message.text.replace(
-    /(https?:\/\/)([^ ]+)/g,
-    '<a target="_blank" href="$&">$2</a>'
-  );
-
   return (
     <li className="clearfix">
-      <div
-        className="message other-message"
-        dangerouslySetInnerHTML={{ __html: cleanseMessage }}
-      ></div>
+      {typeof props.message.text === "string" ||
+      props.message.text instanceof String ? (
+        <div
+          className="message other-message"
+          dangerouslySetInnerHTML={{
+            __html: props.message.text.replace(
+              /(https?:\/\/)([^ ]+)/g,
+              '<a target="_blank" href="$&">$2</a>'
+            ),
+          }}
+        ></div>
+      ) : (
+        <img
+          src={(window.URL || window.webkitURL).createObjectURL(
+            new Blob([props.message.text], {
+              type: "image/png",
+            })
+          )}
+          alt=""
+        />
+      )}
       <div className="message-data">
         <div
           className="sender"

@@ -49,6 +49,7 @@ const Chat = () => {
           messageBoxRef={messageBoxRef}
           participant={participant}
           updateParticipantProfile={updateParticipantProfile}
+          sendMessage={sendMessage}
         />
 
         {participants.length > 0 && (

@@ -1,8 +1,18 @@
+import EmojiPicker from "emoji-picker-react";
 import React, { memo, useState } from "react";
-import Picker from "emoji-picker-react";
+import ImagePicker from "./ImagePicker";
 
-const Features = ({ messageBoxRef }) => {
+const Features = ({ messageBoxRef, sendMessage }) => {
   const [showPicker, setShowPicker] = useState(false);
+
+  const uploadImage = (file) => {
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+      sendMessage(reader.result);
+    };
+    reader.readAsArrayBuffer(file);
+  };
 
   const onEmojiClick = (_event, emojiObject) => {
     const messageField = messageBoxRef.current;
@@ -24,8 +34,13 @@ const Features = ({ messageBoxRef }) => {
   return (
     <div className="text-right features navbar-toggleable-md navbar-light">
       {showPicker && (
-        <Picker pickerStyle={emojiPickerStyle} onEmojiClick={onEmojiClick} />
+        <EmojiPicker
+          pickerStyle={emojiPickerStyle}
+          onEmojiClick={onEmojiClick}
+        />
       )}
+
+      <ImagePicker tag="send-image" callback={uploadImage} />
 
       <button
         className="btn btn-outline-danger"
@@ -33,16 +48,22 @@ const Features = ({ messageBoxRef }) => {
       >
         <i className="fa fa-smile-o"></i>
       </button>
-      <button className="btn btn-outline-info">
-        <i className="fa fa-camera"></i>
+
+      <button className="btn btn-outline-info image-picker-button">
+        <label className="image-picker-label" htmlFor="send-image">
+          <i className="fa fa-camera"></i>
+        </label>
       </button>
-      <button className="btn btn-outline-primary">
+
+      <button className="btn btn-outline-success">
         <i className="fa fa-image"></i>
       </button>
-      <button className="btn btn-outline-success">
+
+      <button className="btn btn-outline-secondary">
         <i className="fa fa-cogs"></i>
       </button>
-      <button className="btn btn-outline-warning">
+
+      <button className="btn btn-outline-primary">
         <i className="fa fa-question"></i>
       </button>
     </div>

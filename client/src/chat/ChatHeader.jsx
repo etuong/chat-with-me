@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, memo, useState } from "react";
 import Features from "./Features";
+import ImagePicker from "./ImagePicker";
 
 const ChatHeader = ({
   participant,
   updateParticipantProfile,
   messageBoxRef,
+  sendMessage
 }) => {
   const [name, setName] = useState("");
   const [isNameEdit, setIsNameEdit] = useState(false);
   const [profilePic, setProfilePic] = useState("");
-  const imageInputRef = useRef(null);
   const nameRef = useRef(null);
 
   useEffect(() => {
@@ -18,18 +19,6 @@ const ChatHeader = ({
       setProfilePic(participant.profilePic);
     }
   }, [participant]);
-
-  useEffect(() => {
-    const element = imageInputRef.current;
-
-    if (element) {
-      element.addEventListener("change", processImageData);
-
-      return () => {
-        element.removeEventListener("change", processImageData);
-      };
-    }
-  }, [imageInputRef]);
 
   useEffect(() => {
     if (isNameEdit) {
@@ -70,19 +59,9 @@ const ChatHeader = ({
       .catch((err) => console.log(err));
   };
 
-  function processImageData() {
-    const file = imageInputRef.current.files[0];
-    uploadImage(file);
-  }
-
   return (
     <div className="chat-header clearfix">
-      <input
-        type="file"
-        ref={imageInputRef}
-        accept="image/*"
-        id="choose-file"
-      />
+      <ImagePicker tag="choose-file" callback={uploadImage} />
 
       {participant && (
         <>
@@ -119,7 +98,7 @@ const ChatHeader = ({
         </>
       )}
 
-      <Features messageBoxRef={messageBoxRef} />
+      <Features messageBoxRef={messageBoxRef} sendMessage={sendMessage}/>
     </div>
   );
 };
