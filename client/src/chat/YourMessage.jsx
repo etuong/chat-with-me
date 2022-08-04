@@ -2,9 +2,17 @@ import React from "react";
 import { memo } from "react";
 
 const YourMessage = (props) => {
+  const cleanseMessage = props.message.text.replace(
+    /(https?:\/\/)([^ ]+)/g,
+    '<a target="_blank" href="$&">$2</a>'
+  );
+
   return (
     <li className="clearfix">
-      <div className="message other-message">{props.message.text}</div>
+      <div
+        className="message other-message"
+        dangerouslySetInnerHTML={{ __html: cleanseMessage }}
+      ></div>
       <div className="message-data">
         <div
           className="sender"

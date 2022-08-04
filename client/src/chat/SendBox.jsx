@@ -1,12 +1,9 @@
-import React from "react";
-import { useRef, memo } from "react";
+import React, { memo } from "react";
 
 const SendBox = (props) => {
-  const messageRef = useRef();
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    const messageField = messageRef.current;
+    const messageField = props.messageBoxRef.current;
     if (messageField && messageField.value) {
       props.handleSendMessage(messageField.value);
       messageField.value = "";
@@ -23,7 +20,7 @@ const SendBox = (props) => {
             </span>
           </div>
           <input
-            ref={messageRef}
+            ref={props.messageBoxRef}
             type="text"
             className="form-control"
             placeholder="Enter message here..."

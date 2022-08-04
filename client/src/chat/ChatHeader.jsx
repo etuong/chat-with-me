@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, memo, useState } from "react";
 import Features from "./Features";
 
-const ChatHeader = ({ participant, updateParticipantProfile }) => {
+const ChatHeader = ({
+  participant,
+  updateParticipantProfile,
+  messageBoxRef,
+}) => {
   const [name, setName] = useState("");
   const [isNameEdit, setIsNameEdit] = useState(false);
   const [profilePic, setProfilePic] = useState("");
@@ -19,10 +23,10 @@ const ChatHeader = ({ participant, updateParticipantProfile }) => {
     const element = imageInputRef.current;
 
     if (element) {
-      element.addEventListener("change", getImageData);
+      element.addEventListener("change", processImageData);
 
       return () => {
-        element.removeEventListener("change", getImageData);
+        element.removeEventListener("change", processImageData);
       };
     }
   }, [imageInputRef]);
@@ -48,10 +52,6 @@ const ChatHeader = ({ participant, updateParticipantProfile }) => {
     updateParticipantProfile({ name, profilePic });
   };
 
-  const handleImageChange = (_) => {
-    imageInputRef.current.click();
-  };
-
   const uploadImage = (file) => {
     const data = new FormData();
     const cloudName = process.env.REACT_APP_CLOUNDINARY_CLOUD_NAME;
@@ -70,7 +70,7 @@ const ChatHeader = ({ participant, updateParticipantProfile }) => {
       .catch((err) => console.log(err));
   };
 
-  function getImageData() {
+  function processImageData() {
     const file = imageInputRef.current.files[0];
     uploadImage(file);
   }
@@ -82,17 +82,19 @@ const ChatHeader = ({ participant, updateParticipantProfile }) => {
         ref={imageInputRef}
         accept="image/*"
         id="choose-file"
-        name="choose-file"
       />
+
       {participant && (
         <>
-          <div
-            className="profile"
-            onClick={handleImageChange}
-            style={{ backgroundImage: `url(${profilePic})` }}
-          >
-            <i className="camera fa fa-camera"></i>
-          </div>
+          <label htmlFor="choose-file">
+            <div
+              className="profile"
+              style={{ backgroundImage: `url(${profilePic})` }}
+            >
+              <i className="camera fa fa-camera"></i>
+            </div>
+          </label>
+
           <div className="name">
             {isNameEdit ? (
               <input
@@ -116,7 +118,8 @@ const ChatHeader = ({ participant, updateParticipantProfile }) => {
           </div>
         </>
       )}
-      <Features />
+
+      <Features messageBoxRef={messageBoxRef} />
     </div>
   );
 };

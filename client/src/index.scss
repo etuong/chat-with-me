@@ -49,9 +49,7 @@ body,
       align-items: center;
 
       [type="file"] {
-        height: 0;
-        width: 0;
-        overflow: hidden;
+        display:none;
       }
 
       span.pencil {
@@ -93,6 +91,8 @@ body,
       .features {
         margin-left: auto;
         display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
         button {
           width: 40px;
         }
@@ -302,5 +302,13 @@ body,
     content: " ";
     clear: both;
     height: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .chat-header {
+    .features {
+      width: 130px;
+    }
   }
 }

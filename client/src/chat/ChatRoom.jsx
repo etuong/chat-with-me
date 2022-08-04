@@ -10,6 +10,7 @@ import Participants from "./Participants";
 
 const Chat = () => {
   const chatBoxRef = useRef();
+  const messageBoxRef = useRef();
 
   const {
     messages,
@@ -45,6 +46,7 @@ const Chat = () => {
     <div className="chat-app">
       <div className="chat">
         <ChatHeader
+          messageBoxRef={messageBoxRef}
           participant={participant}
           updateParticipantProfile={updateParticipantProfile}
         />
@@ -52,7 +54,7 @@ const Chat = () => {
         {participants.length > 0 && (
           <div className="chat-participants-container">
             <h6 className="participants-title-desc">
-              Participants in the Chat
+              Other Participants in the Chat
             </h6>
             <div className="chat-participants">
               {participants.map((participant, index) => {
@@ -92,6 +94,7 @@ const Chat = () => {
         </div>
 
         <SendBox
+          messageBoxRef={messageBoxRef}
           handleSendMessage={handleSendMessage}
           startTyping={startTyping}
           stopTyping={stopTyping}
