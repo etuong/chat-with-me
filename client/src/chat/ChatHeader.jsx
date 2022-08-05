@@ -6,7 +6,7 @@ const ChatHeader = ({
   participant,
   updateParticipantProfile,
   messageBoxRef,
-  sendMessage
+  sendMessage,
 }) => {
   const [name, setName] = useState("");
   const [isNameEdit, setIsNameEdit] = useState(false);
@@ -41,27 +41,13 @@ const ChatHeader = ({
     updateParticipantProfile({ name, profilePic });
   };
 
-  const uploadImage = (file) => {
-    const data = new FormData();
-    const cloudName = process.env.REACT_APP_CLOUNDINARY_CLOUD_NAME;
-    const uploadPreset = process.env.REACT_APP_CLOUNDINARY_UPLOAD_PRESET;
-    data.append("file", file);
-    data.append("upload_preset", uploadPreset);
-    data.append("cloud_name", cloudName);
-    fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-      method: "post",
-      body: data,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setProfilePic(data.secure_url);
-      })
-      .catch((err) => console.log(err));
-  };
-
   return (
     <div className="chat-header clearfix">
-      <ImagePicker tag="choose-file" callback={uploadImage} />
+      <ImagePicker
+        tag="choose-file"
+        callback={setProfilePic}
+        isProfileCloud={true}
+      />
 
       {participant && (
         <>
@@ -98,7 +84,7 @@ const ChatHeader = ({
         </>
       )}
 
-      <Features messageBoxRef={messageBoxRef} sendMessage={sendMessage}/>
+      <Features messageBoxRef={messageBoxRef} sendMessage={sendMessage} />
     </div>
   );
 };

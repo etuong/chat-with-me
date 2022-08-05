@@ -1,11 +1,15 @@
 import React from "react";
 import { memo } from "react";
+import { getTransformedImage, isImageLink } from "utility/ImageUtility";
 
 const YourMessage = (props) => {
   return (
     <li className="clearfix">
-      {typeof props.message.text === "string" ||
-      props.message.text instanceof String ? (
+      {isImageLink(props.message.text) ? (
+        <a target="_blank" href={props.message.text} rel="noreferrer">
+          <img src={getTransformedImage(props.message.text)} alt="" />
+        </a>
+      ) : (
         <div
           className="message other-message"
           dangerouslySetInnerHTML={{
@@ -15,15 +19,6 @@ const YourMessage = (props) => {
             ),
           }}
         ></div>
-      ) : (
-        <img
-          src={(window.URL || window.webkitURL).createObjectURL(
-            new Blob([props.message.text], {
-              type: "image/png",
-            })
-          )}
-          alt=""
-        />
       )}
       <div className="message-data">
         <div

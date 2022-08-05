@@ -5,15 +5,6 @@ import ImagePicker from "./ImagePicker";
 const Features = ({ messageBoxRef, sendMessage }) => {
   const [showPicker, setShowPicker] = useState(false);
 
-  const uploadImage = (file) => {
-    const reader = new FileReader();
-
-    reader.onloadend = function () {
-      sendMessage(reader.result);
-    };
-    reader.readAsArrayBuffer(file);
-  };
-
   const onEmojiClick = (_event, emojiObject) => {
     const messageField = messageBoxRef.current;
     if (messageField) {
@@ -40,7 +31,11 @@ const Features = ({ messageBoxRef, sendMessage }) => {
         />
       )}
 
-      <ImagePicker tag="send-image" callback={uploadImage} />
+      <ImagePicker
+        tag="send-image"
+        callback={sendMessage}
+        isProfileCloud={false}
+      />
 
       <button
         className="btn btn-outline-danger"
@@ -49,14 +44,14 @@ const Features = ({ messageBoxRef, sendMessage }) => {
         <i className="fa fa-smile-o"></i>
       </button>
 
-      <button className="btn btn-outline-info image-picker-button">
-        <label className="image-picker-label" htmlFor="send-image">
-          <i className="fa fa-camera"></i>
-        </label>
+      <button className="btn btn-outline-success">
+        <i className="fa fa-camera"></i>
       </button>
 
-      <button className="btn btn-outline-success">
-        <i className="fa fa-image"></i>
+      <button className="btn btn-outline-info image-picker-button">
+        <label className="image-picker-label" htmlFor="send-image">
+          <i className="fa fa-image"></i>
+        </label>
       </button>
 
       <button className="btn btn-outline-secondary">
