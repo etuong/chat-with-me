@@ -1,9 +1,13 @@
 import EmojiPicker from "emoji-picker-react";
 import React, { memo, useState } from "react";
+import { uploadImage } from "utility/ImageUtility";
 import ImagePicker from "./ImagePicker";
+import Questions from "./Questions";
+import WebCamera from "./WebCamera";
 
 const Features = ({ messageBoxRef, sendMessage }) => {
   const [showPicker, setShowPicker] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onEmojiClick = (_event, emojiObject) => {
     const messageField = messageBoxRef.current;
@@ -31,6 +35,12 @@ const Features = ({ messageBoxRef, sendMessage }) => {
         />
       )}
 
+      <WebCamera
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        callback={(selfie) => uploadImage(selfie, false, sendMessage)}
+      />
+
       <ImagePicker
         tag="send-image"
         callback={sendMessage}
@@ -44,7 +54,10 @@ const Features = ({ messageBoxRef, sendMessage }) => {
         <i className="fa fa-smile-o"></i>
       </button>
 
-      <button className="btn btn-outline-success">
+      <button
+        className="btn btn-outline-success"
+        onClick={() => setIsModalOpen(true)}
+      >
         <i className="fa fa-camera"></i>
       </button>
 
@@ -58,9 +71,7 @@ const Features = ({ messageBoxRef, sendMessage }) => {
         <i className="fa fa-cogs"></i>
       </button>
 
-      <button className="btn btn-outline-primary">
-        <i className="fa fa-question"></i>
-      </button>
+      <Questions />      
     </div>
   );
 };
