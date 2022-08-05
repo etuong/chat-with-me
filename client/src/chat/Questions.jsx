@@ -18,39 +18,41 @@ const Questions = () => (
         </button>
         <div className="header">Chat With Me!</div>
         <div className="content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a
-          nostrum. Dolorem, repellat quidem ut, minima sint vel eveniet
-          quibusdam voluptates delectus doloremque, explicabo tempore dicta
-          adipisci fugit amet dignissimos?
-          <br />
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
-          sit commodi beatae optio voluptatum sed eius cumque, delectus saepe
-          repudiandae explicabo nemo nam libero ad, doloribus, voluptas rem
-          alias. Vitae? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Atque, a nostrum. Dolorem, repellat quidem ut, minima sint vel eveniet
-          quibusdam voluptates delectus doloremque, explicabo tempore dicta
-          adipisci fugit amet dignissimos?
-          <br />
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
-          sit commodi beatae optio voluptatum sed eius cumque, delectus saepe
-          repudiandae explicabo nemo nam libero ad, doloribus, voluptas rem
-          alias. Vitae?
-        </div>
-        <div className="actions">
-          <Popup
-            trigger={<button className="button"> Trigger </button>}
-            position="left center"
-            nested
-          >
-            <div className="popup">
-              <div className="content">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-                magni omnis delectus nemo, maxime molestiae dolorem numquam
-                mollitia, voluptate ea, accusamus excepturi deleniti ratione
-                sapiente! Laudantium, aperiam doloribus. Odit, aut.
-              </div>
-            </div>
-          </Popup>
+          <p>
+            Chat With Me with a public chatroom where any participant can send
+            messages, images, emojis, and even selfies! Online communication can
+            help young people build and develop social skills and gives them a
+            platform to share their skills and help each other out.
+          </p>
+          <p>
+            This web app was designed and built by{" "}
+            <a
+              href="https://www.ethanuong.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Ethan Uong
+            </a>
+            . If you are a developer and would like to contribute to this
+            project, please visit the{" "}
+            <a
+              href="https://github.com/etuong/chat-with-me"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Github repository
+            </a>
+            . Thank you!
+          </p>
+          <p>
+            Tech Stack:
+            <ul>
+              <li>React</li>
+              <li>Node.js and Express</li>
+              <li>Socket.io</li>
+              <li>Cloudinary</li>
+            </ul>
+          </p>
         </div>
       </div>
     )}

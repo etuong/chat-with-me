@@ -51,7 +51,7 @@ const WebCamera = ({ isModalOpen, setIsModalOpen, callback }) => {
               videoConstraints={videoConstraints}
             />
           ) : (
-            <img src={selfie} alt="" className="selfie" />
+            <img src={selfie} alt="" />
           )}
         </div>
         <div className="button-container">
@@ -70,6 +70,7 @@ const WebCamera = ({ isModalOpen, setIsModalOpen, callback }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   callback(selfie);
+                  setSelfie("");
                   setIsModalOpen(false);
                 }}
                 className="webcam-btn btn btn-outline-success"

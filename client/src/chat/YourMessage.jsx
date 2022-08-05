@@ -1,25 +1,10 @@
-import React from "react";
-import { memo } from "react";
-import { getTransformedImage, isImageLink } from "utility/ImageUtility";
+import React, { memo } from "react";
+import Message from "./Message";
 
 const YourMessage = (props) => {
   return (
     <li className="clearfix">
-      {isImageLink(props.message.text) ? (
-        <a target="_blank" href={props.message.text} rel="noreferrer">
-          <img src={getTransformedImage(props.message.text)} alt="" />
-        </a>
-      ) : (
-        <div
-          className="message other-message"
-          dangerouslySetInnerHTML={{
-            __html: props.message.text.replace(
-              /(https?:\/\/)([^ ]+)/g,
-              '<a target="_blank" href="$&">$2</a>'
-            ),
-          }}
-        ></div>
-      )}
+      <Message mine={false} text={props.message.text} />
       <div className="message-data">
         <div
           className="sender"
