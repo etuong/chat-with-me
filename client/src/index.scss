@@ -1,6 +1,8 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~font-awesome/scss/font-awesome.scss";
 @import "~reactjs-popup/dist/index.css";
+@import "~react-toggle/style.css";
+
 html,
 body,
 #root {
@@ -205,6 +207,12 @@ body,
               margin-left: 10px;
               margin-bottom: -15px;
             }
+
+            &.no-bubble {
+              &:after {
+                content: none;
+              }
+            }
           }
 
           .my-message {
@@ -224,6 +232,12 @@ body,
               border-right: 0;
               margin-right: 10px;
               margin-bottom: -15px;
+            }
+
+            &.no-bubble {
+              &:after {
+                content: none;
+              }
             }
           }
 
@@ -372,38 +386,50 @@ body,
   }
 }
 
+.popup-content {
+  width: 400px;
 
-.popup {
-  font-size: 12px;
-  > .header {
-    width: 100%;
-    border-bottom: 1px solid gray;
-    font-size: 18px;
-    text-align: center;
-    padding: 5px;
-  }
-  > .content {
-    width: 100%;
-    padding: 10px 5px;
-  }
-  > .actions {
-    width: 100%;
-    padding: 10px 5px;
-    margin: auto;
-    text-align: center;
-  }
-  > .close {
-    cursor: pointer;
-    position: absolute;
-    display: block;
-    padding: 2px 5px;
-    line-height: 20px;
-    right: -10px;
-    top: -10px;
-    font-size: 24px;
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1px solid #cfcece;
+  .popup {
+    font-size: 13px;
+    > .header {
+      width: 100%;
+      border-bottom: 1px solid gray;
+      font-size: 18px;
+      text-align: center;
+      padding: 5px;
+    }
+    > .content {
+      width: 100%;
+      padding: 10px 5px;
+    }
+    > .actions {
+      width: 100%;
+      padding: 10px 5px;
+      margin: auto;
+      text-align: center;
+    }
+    > .close {
+      cursor: pointer;
+      position: absolute;
+      display: block;
+      padding: 2px 5px;
+      line-height: 20px;
+      right: -10px;
+      top: -10px;
+      font-size: 24px;
+      background: #ffffff;
+      border-radius: 18px;
+      border: 1px solid #cfcece;
+    }
+
+    .preference-item {
+      display: flex;
+      margin: 10px 5px;
+
+      label {
+        margin: auto 5px;
+      }
+    }
   }
 }
 

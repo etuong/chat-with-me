@@ -44,15 +44,15 @@ const Questions = () => (
             </a>
             . Thank you!
           </p>
-          <p>
-            Tech Stack:
+          <div>
+            <span>Tech Stack:</span>
             <ul>
               <li>React</li>
               <li>Node.js and Express</li>
               <li>Socket.io</li>
               <li>Cloudinary</li>
             </ul>
-          </p>
+          </div>
         </div>
       </div>
     )}

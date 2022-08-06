@@ -1,13 +1,7 @@
-import React, { useEffect, useRef, memo, useState } from "react";
-import Features from "./Features";
+import React, { memo, useEffect, useRef, useState } from "react";
 import ImagePicker from "./ImagePicker";
 
-const ChatHeader = ({
-  participant,
-  updateParticipantProfile,
-  messageBoxRef,
-  sendMessage,
-}) => {
+const ChatHeader = ({ participant, updateParticipantProfile }) => {
   const [name, setName] = useState("");
   const [isNameEdit, setIsNameEdit] = useState(false);
   const [profilePic, setProfilePic] = useState("");
@@ -42,7 +36,7 @@ const ChatHeader = ({
   };
 
   return (
-    <div className="chat-header clearfix">
+    <React.Fragment>
       <ImagePicker
         tag="choose-file"
         callback={setProfilePic}
@@ -83,9 +77,7 @@ const ChatHeader = ({
           </div>
         </>
       )}
-
-      <Features messageBoxRef={messageBoxRef} sendMessage={sendMessage} />
-    </div>
+    </React.Fragment>
   );
 };
 

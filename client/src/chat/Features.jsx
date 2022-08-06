@@ -2,10 +2,18 @@ import EmojiPicker from "emoji-picker-react";
 import React, { memo, useState } from "react";
 import { uploadImage } from "utility/ImageUtility";
 import ImagePicker from "./ImagePicker";
+import Preferences from "./Preferences";
 import Questions from "./Questions";
 import WebCamera from "./WebCamera";
 
-const Features = ({ messageBoxRef, sendMessage }) => {
+const Features = ({
+  messageBoxRef,
+  sendMessage,
+  setShowPreferences,
+  showPreferences,
+  showSender,
+  setShowSender,
+}) => {
   const [showPicker, setShowPicker] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -67,11 +75,14 @@ const Features = ({ messageBoxRef, sendMessage }) => {
         </label>
       </button>
 
-      <button className="btn btn-outline-secondary">
-        <i className="fa fa-cogs"></i>
-      </button>
+      <Preferences
+        showPreferences={showPreferences}
+        setShowPreferences={setShowPreferences}
+        showSender={showSender}
+        setShowSender={setShowSender}
+      />
 
-      <Questions />      
+      <Questions />
     </div>
   );
 };

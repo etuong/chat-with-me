@@ -17,14 +17,16 @@ const renderImageMessage = (text) => {
   );
 };
 
-const Message = ({ text, mine }) => {
+const Message = ({ text, mine, showSender }) => {
   return (
     <React.Fragment>
       {isImageLink(text) ? (
         renderImageMessage(text)
       ) : (
         <div
-          className={`message ${mine ? "my-message" : "other-message"}`}
+          className={`message ${mine ? "my-message" : "other-message"} ${
+            showSender ? "" : "no-bubble"
+          }`}
           dangerouslySetInnerHTML={{
             __html: text.replace(
               /(https?:\/\/)([^ ]+)/g,

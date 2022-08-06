@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useChat from "../hooks/useChat";
 import ChatHeader from "./ChatHeader";
 import MyMessage from "./MyMessage";
@@ -7,10 +7,14 @@ import YourMessage from "./YourMessage";
 import useTyping from "../hooks/useTyping";
 import MessageTyping from "./MessageTyping";
 import Participants from "./Participants";
+import Features from "./Features";
+import Message from "./Message";
 
 const Chat = () => {
   const chatBoxRef = useRef();
   const messageBoxRef = useRef();
+  const [showPreferences, setShowPreferences] = useState(true);
+  const [showSender, setShowSender] = useState(true);
 
   const {
     messages,
@@ -45,14 +49,24 @@ const Chat = () => {
   return (
     <div className="chat-app">
       <div className="chat">
-        <ChatHeader
-          messageBoxRef={messageBoxRef}
-          participant={participant}
-          updateParticipantProfile={updateParticipantProfile}
-          sendMessage={sendMessage}
-        />
+        <div className="chat-header clearfix">
+          <ChatHeader
+            participant={participant}
+            updateParticipantProfile={updateParticipantProfile}
+          />
+          <Features
+            messageBoxRef={messageBoxRef}
+            sendMessage={sendMessage}
+            showPreferences={showPreferences}
+            setShowPreferences={() =>
+              setShowPreferences((showPreferences) => !showPreferences)
+            }
+            showSender={showSender}
+            setShowSender={() => setShowSender((showSender) => !showSender)}
+          />
+        </div>
 
-        {participants.length > 0 && (
+        {showPreferences && participants.length > 0 && (
           <div className="chat-participants-container">
             <h6 className="participants-title-desc">
               Other Participants in the Chat
@@ -76,13 +90,27 @@ const Chat = () => {
             {messages &&
               messages.map((message, index) => {
                 return (
-                  <React.Fragment key={index}>
-                    {message.fromMe ? (
-                      <MyMessage message={message} />
-                    ) : (
-                      <YourMessage message={message} />
+                  <li
+                    key={index}
+                    className={`clearfix ${
+                      message.fromMe ? "flush-right" : ""
+                    }`}
+                  >
+                    <Message
+                      mine={message.fromMe}
+                      text={message.text}
+                      showSender={showSender}
+                    />
+                    {showSender && (
+                      <React.Fragment>
+                        {message.fromMe ? (
+                          <MyMessage message={message} />
+                        ) : (
+                          <YourMessage message={message} />
+                        )}
+                      </React.Fragment>
                     )}
-                  </React.Fragment>
+                  </li>
                 );
               })}
             {typingParticipants &&
