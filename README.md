@@ -2,11 +2,21 @@
 
 > A chatting web app built with React and Socket.io
 
+![screenshot](screenshot.png)
+
+## Features
+Chat With Me with a public chatroom where any participant can send messages, images, emojis, and even selfies! Online communication can help young people build and develop social skills and gives them a platform to share their skills and help each other out.
+
+### Tech Stack
+* React
+* Node.js and Express
+* Socket.io
+* Cloudinary
+
 ## Development
 - client folder contains frontend related artifacts
-  - ```yarn serve``` runs the application
+  - ```yarn start``` runs the application
   - ```yarn build``` builds the static resources
-  - ```yarn deploy``` deploys the static resources to your Github page
 - server folder contains backend related files
   - ```yarn start``` kicks off the server
 
@@ -21,9 +31,8 @@
       git subtree push --prefix server heroku master
       ```
 - Push client
-  - Use your preference to host your client app. I chose Github Page for its simplicity.
-  - Run ```yarn build``` and then ```yarn deploy```
-  - Make sure main.js connects to your server (and not localhost)
+  - Use your preference to host your client app. I would suggest to use Netlify as it auto builds for you upon a Git push. Github Pages is another option too but you'll need to configure and manage the Github Actions for automation.
+  - Run ```yarn build``` and then deploy.
 
 ### Technologies 🔧
 + [React](https://reactjs.org/)

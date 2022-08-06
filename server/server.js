@@ -39,7 +39,10 @@ const UPDATE_PARTICIPANT_PROFILE = "UPDATE_PARTICIPANT_PROFILE";
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://etuong.github.io"],
+    origin: [
+      "http://localhost:3000",
+      "https://spiffy-crostata-ab1518.netlify.app/",
+    ],
     credentials: true,
   },
   transports: ["polling", "websocket"],

@@ -25,7 +25,7 @@ const Questions = () => (
             platform to share their skills and help each other out.
           </p>
           <p>
-            This web app was designed and built by{" "}
+            This web app was designed and built by
             <a
               href="https://www.ethanuong.com"
               target="_blank"
@@ -34,7 +34,7 @@ const Questions = () => (
               Ethan Uong
             </a>
             . If you are a developer and would like to contribute to this
-            project, please visit the{" "}
+            project, please visit the
             <a
               href="https://github.com/etuong/chat-with-me"
               target="_blank"
