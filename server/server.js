@@ -11,7 +11,7 @@ const {
 } = require("./participants");
 const { addMessage, getMessages, deleteAllMessages } = require("./messages");
 
-app.use(logger("dev"));
+// app.use(logger("dev"));
 app.use(cors());
 app.get("/", (_, res) => {
   res.redirect("https://spiffy-crostata-ab1518.netlify.app/");
@@ -68,6 +68,7 @@ io.on("connection", (socket) => {
   socket.on(NEW_MESSAGE, (data) => {
     const sender = getParticipant(data.senderId);
     const message = addMessage(sender, data.text);
+    console.log(`${message.sender?.name} sent "${message.text}"`);
     io.emit(NEW_MESSAGE, message);
   });
 
@@ -76,6 +77,7 @@ io.on("connection", (socket) => {
     if (participant) {
       participant.name = updatedParticipant.name;
       participant.profilePic = updatedParticipant.profilePic;
+      console.log(participant);
       io.emit(UPDATE_PARTICIPANT_PROFILE, participant);
     }
   });
@@ -107,7 +109,7 @@ app.get("/messages", (req, res) => {
   return res.json({ messages });
 });
 
-app.get("/delete-all-messages", (req, res) => {
+app.get("/delete-all-messages", (_req, res) => {
   deleteAllMessages();
   res.status(200).send("All messages have been deleted!");
 });

@@ -10,7 +10,8 @@ const SendBox = (props) => {
     }
   };
 
-  const onEnterPress = (e) => {
+  const onKeyDown = (e) => {
+    props.startTyping();
     if (e.keyCode === 13 && e.shiftKey === false) {
       e.preventDefault();
       handleSubmit(e);
@@ -25,9 +26,8 @@ const SendBox = (props) => {
             ref={props.messageBoxRef}
             className="form-control"
             placeholder="Enter message here..."
-            onKeyPress={props.startTyping}
             onKeyUp={props.stopTyping}
-            onKeyDown={onEnterPress}
+            onKeyDown={onKeyDown}
           />
           <div className="input-group-prepend" onClick={handleSubmit}>
             <span className="input-group-text">

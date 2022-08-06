@@ -439,6 +439,10 @@ body,
   .chat {
     width: auto !important;
 
+    .chat-history {
+      padding: 10px !important;
+    }
+
     .chat-header {
       .name {
         input[type="text"] {

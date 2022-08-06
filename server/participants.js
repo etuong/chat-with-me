@@ -8,6 +8,10 @@ class Participant {
   }
 }
 
+Participant.prototype.toString = function() {
+  return `Name: ${this.name}, Profile Picture: ${this.profilePic}`;
+};
+
 const participants = [];
 
 const addParticipant = (id, name, profilePic) => {

@@ -79,7 +79,7 @@ const Chat = () => {
     var blob = new Blob(
       [
         messages
-          .map((m) => `(${m.dateTime}) ${m.sender.name}: ${m.text}`)
+          .map((m) => `(${m.dateTime}) ${m.sender?.name}: ${m.text}`)
           .join("\r\n"),
       ],
       {
