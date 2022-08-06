@@ -10,7 +10,10 @@ const START_TYPING = "START_TYPING";
 const STOP_TYPING = "STOP_TYPING";
 const UPDATE_PARTICIPANT_PROFILE = "UPDATE_PARTICIPANT_PROFILE";
 
-const SOCKET_SERVER_URL = "http://localhost:8081";
+const SOCKET_SERVER_URL =
+  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+    ? "http://localhost:8081"
+    : "https://chat-with-ethan.herokuapp.com";
 
 const useChat = () => {
   const [messages, setMessages] = useState([]);
