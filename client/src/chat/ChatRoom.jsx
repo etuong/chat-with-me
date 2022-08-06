@@ -9,6 +9,7 @@ import MessageTyping from "./MessageTyping";
 import Participants from "./Participants";
 import Features from "./Features";
 import Message from "./Message";
+import FileSaver from "file-saver";
 
 const Chat = () => {
   const chatBoxRef = useRef();
@@ -29,11 +30,6 @@ const Chat = () => {
 
   const { isTyping, startTyping, stopTyping, cancelTyping } = useTyping();
 
-  const handleSendMessage = (newMessage) => {
-    cancelTyping();
-    sendMessage(newMessage);
-  };
-
   useEffect(() => {
     if (isTyping) startTypingMessage();
     else stopTypingMessage();
@@ -46,6 +42,25 @@ const Chat = () => {
     });
   }, []);
 
+  const handleSendMessage = (newMessage) => {
+    cancelTyping();
+    sendMessage(newMessage);
+  };
+
+  const handleSaveChat = () => {
+    var blob = new Blob(
+      [
+        messages
+          .map((m) => `(${m.dateTime}) ${m.sender.name}: ${m.text}`)
+          .join("\r\n"),
+      ],
+      {
+        type: "text/plain;charset=utf-8",
+      }
+    );
+    FileSaver.saveAs(blob, "chat-with-me.txt");
+  };
+
   return (
     <div className="chat-app">
       <div className="chat">
@@ -56,6 +71,7 @@ const Chat = () => {
           />
           <Features
             messageBoxRef={messageBoxRef}
+            handleSaveChat={handleSaveChat}
             sendMessage={sendMessage}
             showPreferences={showPreferences}
             setShowPreferences={() =>

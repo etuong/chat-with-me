@@ -71,6 +71,10 @@ body,
         font-size: large;
         float: left;
         margin-left: 10px;
+        input[type="text"] {
+          width: 192px;
+        }
+
         .editing {
           background: transparent;
           outline: 0;
@@ -433,8 +437,13 @@ body,
   }
 }
 
-@media (max-width: 450px) {
+@media only screen and (max-width: 450px) {
   .chat-header {
+    .name {
+      input[type="text"] {
+        width: 160px !important;
+      }
+    }
     .features {
       width: 130px;
     }

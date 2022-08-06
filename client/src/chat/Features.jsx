@@ -8,6 +8,7 @@ import WebCamera from "./WebCamera";
 
 const Features = ({
   messageBoxRef,
+  handleSaveChat,
   sendMessage,
   setShowPreferences,
   showPreferences,
@@ -81,6 +82,13 @@ const Features = ({
         showSender={showSender}
         setShowSender={setShowSender}
       />
+
+      <button
+        className="btn btn-outline-warning"
+        onClick={(_e) => handleSaveChat()}
+      >
+        <i className="fa fa-file-text-o"></i>
+      </button>
 
       <Questions />
     </div>
