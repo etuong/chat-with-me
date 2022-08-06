@@ -10,23 +10,30 @@ const SendBox = (props) => {
     }
   };
 
+  const onEnterPress = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
   return (
     <div className="chat-message clearfix">
       <form onSubmit={handleSubmit}>
         <div className="input-group mb-0">
+          <textarea
+            ref={props.messageBoxRef}
+            className="form-control"
+            placeholder="Enter message here..."
+            onKeyPress={props.startTyping}
+            onKeyUp={props.stopTyping}
+            onKeyDown={onEnterPress}
+          />
           <div className="input-group-prepend" onClick={handleSubmit}>
             <span className="input-group-text">
               <i className="fa fa-send"></i>
             </span>
           </div>
-          <input
-            ref={props.messageBoxRef}
-            type="text"
-            className="form-control"
-            placeholder="Enter message here..."
-            onKeyPress={props.startTyping}
-            onKeyUp={props.stopTyping}
-          />
         </div>
       </form>
     </div>

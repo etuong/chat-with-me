@@ -3,12 +3,6 @@
 @import "~reactjs-popup/dist/index.css";
 @import "~react-toggle/style.css";
 
-html,
-body,
-#root {
-  height: 100%;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -24,14 +18,6 @@ body,
 
 .chat-app {
   background: whitesmoke;
-  transition: 0.5s;
-  border: 0;
-  border-radius: 0.55rem;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-  display: flex;
 
   .chat {
     background: url("https://camo.githubusercontent.com/854a93c27d64274c4f8f5a0b6ec36ee1d053cfcd934eac6c63bed9eaef9764bd/68747470733a2f2f7765622e77686174736170702e636f6d2f696d672f62672d636861742d74696c652d6461726b5f61346265353132653731393562366237333364393131306234303866303735642e706e67");
@@ -317,6 +303,11 @@ body,
       .input-group {
         height: 50px;
 
+        textarea {
+          resize: none;
+          overflow: hidden;
+        }
+
         .form-control {
           height: 100%;
         }
@@ -438,14 +429,18 @@ body,
 }
 
 @media only screen and (max-width: 450px) {
-  .chat-header {
-    .name {
-      input[type="text"] {
-        width: 160px !important;
+  .chat {
+    width: auto !important;
+
+    .chat-header {
+      .name {
+        input[type="text"] {
+          width: 160px !important;
+        }
       }
-    }
-    .features {
-      width: 130px;
+      .features {
+        width: 130px;
+      }
     }
   }
 }

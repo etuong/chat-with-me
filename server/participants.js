@@ -1,8 +1,10 @@
 class Participant {
   constructor(id, name, profilePic) {
     this.id = id; // Participant ID is same as socket ID
-    this.name = name;
-    this.profilePic = profilePic || "https://i.pravatar.cc/300";
+    const randomKey = Math.floor(Math.random() * 71);
+    this.name = name || `Participant ${randomKey}`;
+    this.profilePic =
+      profilePic || `https://i.pravatar.cc/150?img=${randomKey}}`;
   }
 }
 

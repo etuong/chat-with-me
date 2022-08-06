@@ -10,10 +10,7 @@ const START_TYPING = "START_TYPING";
 const STOP_TYPING = "STOP_TYPING";
 const UPDATE_PARTICIPANT_PROFILE = "UPDATE_PARTICIPANT_PROFILE";
 
-const SOCKET_SERVER_URL =
-  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-    ? "http://localhost:8081"
-    : "https://chat-with-ethan.herokuapp.com";
+const SOCKET_SERVER_URL = "http://localhost:8081";
 
 const useChat = () => {
   const [messages, setMessages] = useState([]);
@@ -44,12 +41,7 @@ const useChat = () => {
       let chatter = localStorage.getItem("participant");
       if (chatter) {
         chatter = JSON.parse(chatter);
-      } else {
-        chatter = {
-          name: `Participant ${Math.floor(Math.random() * 100)}`,
-          profilePic: "",
-        };
-      }
+      } 
 
       socketRef.current.emit(USER_JOIN, chatter);
 

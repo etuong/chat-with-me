@@ -11,6 +11,34 @@ import Features from "./Features";
 import Message from "./Message";
 import FileSaver from "file-saver";
 
+const renderMessage = (message, index, showSender) => {
+  if (!message || !message.text) {
+    return null;
+  }
+
+  return (
+    <li
+      key={index}
+      className={`clearfix ${message.fromMe ? "flush-right" : ""}`}
+    >
+      <Message
+        mine={message.fromMe}
+        text={message.text}
+        showSender={showSender}
+      />
+      {showSender && (
+        <React.Fragment>
+          {message.fromMe ? (
+            <MyMessage message={message} />
+          ) : (
+            <YourMessage message={message} />
+          )}
+        </React.Fragment>
+      )}
+    </li>
+  );
+};
+
 const Chat = () => {
   const chatBoxRef = useRef();
   const messageBoxRef = useRef();
@@ -104,31 +132,9 @@ const Chat = () => {
         <div className="chat-history" ref={chatBoxRef}>
           <ul className="m-b-0">
             {messages &&
-              messages.map((message, index) => {
-                return (
-                  <li
-                    key={index}
-                    className={`clearfix ${
-                      message.fromMe ? "flush-right" : ""
-                    }`}
-                  >
-                    <Message
-                      mine={message.fromMe}
-                      text={message.text}
-                      showSender={showSender}
-                    />
-                    {showSender && (
-                      <React.Fragment>
-                        {message.fromMe ? (
-                          <MyMessage message={message} />
-                        ) : (
-                          <YourMessage message={message} />
-                        )}
-                      </React.Fragment>
-                    )}
-                  </li>
-                );
-              })}
+              messages.map((message, index) =>
+                renderMessage(message, index, showSender)
+              )}
             {typingParticipants &&
               typingParticipants.map((typist, index) => (
                 <li key={index}>

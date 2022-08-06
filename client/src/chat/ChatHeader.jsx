@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState, useId } from "react";
 import ImagePicker from "./ImagePicker";
 
 const ChatHeader = ({ participant, updateParticipantProfile }) => {
@@ -6,6 +6,7 @@ const ChatHeader = ({ participant, updateParticipantProfile }) => {
   const [isNameEdit, setIsNameEdit] = useState(false);
   const [profilePic, setProfilePic] = useState("");
   const nameRef = useRef(null);
+  const imagePickerId = useId();
 
   useEffect(() => {
     if (participant) {
@@ -38,14 +39,14 @@ const ChatHeader = ({ participant, updateParticipantProfile }) => {
   return (
     <React.Fragment>
       <ImagePicker
-        tag="choose-file"
+        tag={imagePickerId}
         callback={setProfilePic}
         isProfileCloud={true}
       />
 
       {participant && (
         <>
-          <label htmlFor="choose-file">
+          <label htmlFor={imagePickerId}>
             <div
               className="profile"
               style={{ backgroundImage: `url(${profilePic})` }}

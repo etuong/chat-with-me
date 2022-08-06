@@ -55,7 +55,8 @@ io.on("connection", (socket) => {
   socket.emit("connected");
 
   socket.on(USER_JOIN, (data) => {
-    const { name, profilePic } = data;
+    const name = data?.name;
+    const profilePic = data?.profilePic;
     const participant = addParticipant(socket.id, name, profilePic);
     if (participant) {
       console.log(`${participant.name} has joined the chat`);

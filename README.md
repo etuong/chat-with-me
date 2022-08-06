@@ -2,7 +2,7 @@
 
 > A chatting web app built with React and Socket.io
 
-![screenshot](screenshot.png)
+<img src="screenshot.png" width="400">
 
 ## Features
 Chat With Me with a public chatroom where any participant can send messages, images, emojis, and even selfies! Online communication can help young people build and develop social skills and gives them a platform to share their skills and help each other out.

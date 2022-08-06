@@ -17,6 +17,12 @@ const renderImageMessage = (text) => {
   );
 };
 
+const cleanseMessage = (text) => {
+  return text
+    .replace(/(https?:\/\/)([^ ]+)/g, '<a target="_blank" href="$&">$2</a>')
+    .replaceAll("\n", "<br/>");
+};
+
 const Message = ({ text, mine, showSender }) => {
   return (
     <React.Fragment>
@@ -28,10 +34,7 @@ const Message = ({ text, mine, showSender }) => {
             showSender ? "" : "no-bubble"
           }`}
           dangerouslySetInnerHTML={{
-            __html: text.replace(
-              /(https?:\/\/)([^ ]+)/g,
-              '<a target="_blank" href="$&">$2</a>'
-            ),
+            __html: cleanseMessage(text),
           }}
         ></div>
       )}

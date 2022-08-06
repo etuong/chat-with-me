@@ -1,5 +1,5 @@
 import EmojiPicker from "emoji-picker-react";
-import React, { memo, useState } from "react";
+import React, { memo, useState, useId } from "react";
 import { uploadImage } from "utility/ImageUtility";
 import ImagePicker from "./ImagePicker";
 import Preferences from "./Preferences";
@@ -17,6 +17,7 @@ const Features = ({
 }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const imagePickerId = useId();
 
   const onEmojiClick = (_event, emojiObject) => {
     const messageField = messageBoxRef.current;
@@ -51,7 +52,7 @@ const Features = ({
       />
 
       <ImagePicker
-        tag="send-image"
+        tag={imagePickerId}
         callback={sendMessage}
         isProfileCloud={false}
       />
@@ -71,7 +72,7 @@ const Features = ({
       </button>
 
       <button className="btn btn-outline-info image-picker-button">
-        <label className="image-picker-label" htmlFor="send-image">
+        <label className="image-picker-label" htmlFor={imagePickerId}>
           <i className="fa fa-image"></i>
         </label>
       </button>
