@@ -7,12 +7,6 @@
 ## Features
 Chat With Me with a public chatroom where any participant can send messages, images, emojis, and even selfies! Online communication can help young people build and develop social skills and gives them a platform to share their skills and help each other out.
 
-### Tech Stack
-* React
-* Node.js and Express
-* Socket.io
-* Cloudinary
-
 ## Development
 - client folder contains frontend related artifacts
   - ```yarn start``` runs the application
@@ -36,7 +30,9 @@ Chat With Me with a public chatroom where any participant can send messages, ima
 
 ### Technologies 🔧
 + [React](https://reactjs.org/)
++ [Express](https://expressjs.com/)
 + [Socket.io](https://socket.io/)
++ [Cloudinary](https://cloudinary.com/)
 
 #### License ⚖️
 [MIT](https://en.wikipedia.org/wiki/MIT_License)

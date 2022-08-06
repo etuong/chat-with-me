@@ -41,7 +41,7 @@ const io = require("socket.io")(server, {
   cors: {
     origin: [
       "http://localhost:3000",
-      "https://spiffy-crostata-ab1518.netlify.app/",
+      "https://spiffy-crostata-ab1518.netlify.app",
     ],
     credentials: true,
   },
