@@ -4,6 +4,7 @@ let messages = [];
 
 const addMessage = (sender, text) => {
   const dateTime = new Date().toLocaleDateString("en-us", {
+    timeZone: "America/Los_Angeles",
     year: "numeric",
     month: "short",
     day: "numeric",
