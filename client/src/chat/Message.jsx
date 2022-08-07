@@ -23,7 +23,7 @@ const cleanseMessage = (text) => {
     .replaceAll("\n", "<br/>");
 };
 
-const Message = ({ text, mine, showSender }) => {
+const Message = ({ text, mine, showSender, fontSize }) => {
   return (
     <React.Fragment>
       {isImageLink(text) ? (
@@ -33,6 +33,7 @@ const Message = ({ text, mine, showSender }) => {
           className={`message ${mine ? "my-message" : "other-message"} ${
             showSender ? "" : "no-bubble"
           }`}
+          style={{ fontSize: `${fontSize}` }}
           dangerouslySetInnerHTML={{
             __html: cleanseMessage(text),
           }}

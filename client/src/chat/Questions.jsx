@@ -3,6 +3,7 @@ import Popup from "reactjs-popup";
 
 const Questions = () => (
   <Popup
+    contentStyle={{ width: "280px" }}
     trigger={
       <button className="btn btn-outline-primary">
         <i className="fa fa-question"></i>
@@ -25,9 +26,15 @@ const Questions = () => (
             platform to share their skills and help each other out.
           </p>
           <p>
+            The first time you enter the chatroom you will be given a random
+            avatar and profile name. Go ahead and personalize them if you want!
             This chat also supports HTML.
             <code> &lt;h1&gt;Try me!&lt;/h1&gt; </code>
-            will give you a larger header
+            will give you a larger header.
+          </p>
+          <p>
+            Messages are never stored anywhere. They will be deleted every time
+            my server restarts. And this happens every 30 minutes of inactivity.
           </p>
           <p>
             This web app was designed and built by{" "}

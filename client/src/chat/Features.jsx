@@ -14,6 +14,8 @@ const Features = ({
   showPreferences,
   showSender,
   setShowSender,
+  fontSize,
+  setFontSize
 }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,6 +84,8 @@ const Features = ({
         setShowPreferences={setShowPreferences}
         showSender={showSender}
         setShowSender={setShowSender}
+        fontSize={fontSize}
+        setFontSize={setFontSize}
       />
 
       <button

@@ -11,7 +11,7 @@ import Features from "./Features";
 import Message from "./Message";
 import FileSaver from "file-saver";
 
-const renderMessage = (message, index, showSender) => {
+const renderMessage = (message, index, showSender, fontSize) => {
   if (!message || !message.text) {
     return null;
   }
@@ -25,6 +25,7 @@ const renderMessage = (message, index, showSender) => {
         mine={message.fromMe}
         text={message.text}
         showSender={showSender}
+        fontSize={fontSize}
       />
       {showSender && (
         <React.Fragment>
@@ -44,6 +45,7 @@ const Chat = () => {
   const messageBoxRef = useRef();
   const [showPreferences, setShowPreferences] = useState(true);
   const [showSender, setShowSender] = useState(true);
+  const [fontSize, setFontSize] = useState("16px");
 
   const {
     messages,
@@ -107,6 +109,8 @@ const Chat = () => {
             }
             showSender={showSender}
             setShowSender={() => setShowSender((showSender) => !showSender)}
+            fontSize={fontSize}
+            setFontSize={setFontSize}
           />
         </div>
 
@@ -133,7 +137,7 @@ const Chat = () => {
           <ul className="m-b-0">
             {messages &&
               messages.map((message, index) =>
-                renderMessage(message, index, showSender)
+                renderMessage(message, index, showSender, fontSize)
               )}
             {typingParticipants &&
               typingParticipants.map((typist, index) => (
