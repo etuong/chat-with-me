@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import useChat from "../hooks/useChat";
 import ChatHeader from "./ChatHeader";
+import Features from "./Features";
+import FileSaver from "file-saver";
+import Message from "./Message";
+import MessageTyping from "./MessageTyping";
 import MyMessage from "./MyMessage";
+import Participants from "./Participants";
+import React, { useEffect, useRef, useState } from "react";
 import SendBox from "./SendBox";
 import YourMessage from "./YourMessage";
+import useChat from "../hooks/useChat";
 import useTyping from "../hooks/useTyping";
-import MessageTyping from "./MessageTyping";
-import Participants from "./Participants";
-import Features from "./Features";
-import Message from "./Message";
-import FileSaver from "file-saver";
+import Welcome from "./Welcome";
 
 const renderMessage = (message, index, showSender, fontSize) => {
   if (!message || !message.text) {
@@ -46,6 +47,7 @@ const Chat = () => {
   const [showPreferences, setShowPreferences] = useState(true);
   const [showSender, setShowSender] = useState(true);
   const [fontSize, setFontSize] = useState("16px");
+  const [openWelcomeDlg, setOpenWelcomeDlg] = useState(true);
 
   const {
     messages,
@@ -93,6 +95,11 @@ const Chat = () => {
 
   return (
     <div className="chat-app">
+      <Welcome
+        participantCount={participants.length + 1}
+        participant={participant}
+        updateParticipantProfile={updateParticipantProfile}
+      />
       <div className="chat">
         <div className="chat-header clearfix">
           <ChatHeader

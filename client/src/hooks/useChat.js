@@ -41,12 +41,12 @@ const useChat = () => {
       socketRef.current = socketIOClient(SOCKET_SERVER_URL);
 
       // Restore "this" participant's info
-      let chatter = localStorage.getItem("participant");
-      if (chatter) {
-        chatter = JSON.parse(chatter);
-      } 
-
-      socketRef.current.emit(USER_JOIN, chatter);
+      let chatterName = localStorage.getItem("name");
+      let chatterProfilePic = localStorage.getItem("profilePic");
+      socketRef.current.emit(USER_JOIN, {
+        name: chatterName,
+        profilePic: chatterProfilePic,
+      });
 
       socketRef.current.on("connect", () => {
         console.log("Handshake established!");
@@ -127,9 +127,9 @@ const useChat = () => {
     });
   }, [participants]);
 
-  const updateParticipantProfile = ({ name, profilePic }) => {
+  const updateParticipantProfile = (key, value) => {
     if (!socketRef.current) return;
-    const updatedParticipant = { ...participant, name, profilePic };
+    const updatedParticipant = { ...participant, [key]: value };
     socketRef.current.emit(UPDATE_PARTICIPANT_PROFILE, updatedParticipant);
   };
 

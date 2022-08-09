@@ -44,10 +44,6 @@ body,
       display: flex;
       align-items: center;
 
-      [type="file"] {
-        display: none;
-      }
-
       span.pencil {
         cursor: pointer;
         margin: 0px 5px;
@@ -73,18 +69,6 @@ body,
           background: transparent;
           outline: 0;
           border-width: 0 0 2px;
-        }
-      }
-
-      .profile {
-        @include avatar(60px);
-        cursor: pointer;
-
-        i.camera {
-          position: absolute;
-          border-radius: 50%;
-          background-color: white;
-          box-shadow: 0 0 15px 2px lightcyan;
         }
       }
 
@@ -397,7 +381,7 @@ body,
     > .header {
       width: 100%;
       border-bottom: 1px solid gray;
-      font-size: 18px;
+      font-size: 22px;
       text-align: center;
       padding: 5px;
     }
@@ -433,6 +417,36 @@ body,
         margin: auto 5px;
       }
     }
+
+    .welcome-item {
+      margin: 15px 5px;
+      &.welcome-flex {
+        display: flex;
+        .welcome-avatar {
+          margin-right: 10px;
+        }
+        .welcome-avatar-text {
+          align-self: center;
+          width: 80%;
+        }
+      }
+    }
+  }
+}
+
+[type="file"] {
+  display: none;
+}
+
+.profile {
+  @include avatar(60px);
+  cursor: pointer;
+
+  i.camera {
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 0 15px 2px lightcyan;
   }
 }
 

@@ -1,81 +1,20 @@
-import React, { memo, useEffect, useRef, useState, useId } from "react";
-import ImagePicker from "./ImagePicker";
+import React, { memo } from "react";
+import AvatarSelector from "./AvatarSelector";
+import NameSelector from "./NameSelector";
 
 const ChatHeader = ({ participant, updateParticipantProfile }) => {
-  const [name, setName] = useState("");
-  const [isNameEdit, setIsNameEdit] = useState(false);
-  const [profilePic, setProfilePic] = useState("");
-  const nameRef = useRef(null);
-  const imagePickerId = useId();
-
-  useEffect(() => {
-    if (participant) {
-      setName(participant.name);
-      setProfilePic(participant.profilePic);
-    }
-  }, [participant]);
-
-  useEffect(() => {
-    if (isNameEdit) {
-      const end = nameRef.current.value.length;
-      nameRef.current.setSelectionRange(end, end);
-      nameRef.current.focus();
-    } else if (name) {
-      handleProfileUpdate();
-    }
-  }, [isNameEdit]);
-
-  useEffect(() => {
-    if (profilePic) {
-      handleProfileUpdate();
-    }
-  }, [profilePic]);
-
-  const handleProfileUpdate = () => {
-    localStorage.setItem("participant", JSON.stringify({ name, profilePic }));
-    updateParticipantProfile({ name, profilePic });
-  };
-
   return (
     <React.Fragment>
-      <ImagePicker
-        tag={imagePickerId}
-        callback={setProfilePic}
-        isProfileCloud={true}
-      />
-
       {participant && (
         <>
-          <label htmlFor={imagePickerId}>
-            <div
-              className="profile"
-              style={{ backgroundImage: `url(${profilePic})` }}
-            >
-              <i className="camera fa fa-camera"></i>
-            </div>
-          </label>
-
-          <div className="name">
-            {isNameEdit ? (
-              <input
-                type="text"
-                ref={nameRef}
-                value={name}
-                className="editing"
-                onChange={(e) => setName(e.target.value)}
-              />
-            ) : (
-              <>{name}</>
-            )}
-            <span
-              className={`pencil ${isNameEdit ? "edit" : "notEdit"}`}
-              onClick={(_) => {
-                setIsNameEdit(!isNameEdit);
-              }}
-            >
-              &#9998;
-            </span>
-          </div>
+          <AvatarSelector
+            participantPic={participant.profilePic}
+            updateParticipantProfile={updateParticipantProfile}
+          />
+          <NameSelector
+            participantName={participant.name}
+            updateParticipantProfile={updateParticipantProfile}
+          />
         </>
       )}
     </React.Fragment>
