@@ -1,6 +1,6 @@
 # Chat With Me
 
-> A chatting web app built with React and Socket.io
+> A chatting web app built with React, Socket.io, and MongoDB
 
 <img src="screenshot.png" width="400">
 
@@ -33,6 +33,7 @@ Chat With Me with a public chatroom where any participant can send messages, ima
 + [Express](https://expressjs.com/)
 + [Socket.io](https://socket.io/)
 + [Cloudinary](https://cloudinary.com/)
++ [MongoDB](https://www.mongodb.com/)
 
 #### License ⚖️
 [MIT](https://en.wikipedia.org/wiki/MIT_License)

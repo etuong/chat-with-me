@@ -68,12 +68,21 @@ io.on("connection", (socket) => {
 
   socket.on(NEW_MESSAGE, async (data) => {
     const sender = getParticipant(data.senderId);
+    let text = data.text;
     try {
-      const message = await createMessage(sender, data.text);
-      console.log(`${message.senderName} sent "${message.text}"`);
+      if (text.includes("data:application/octet-stream;base64")) {
+        let newData = text.split(";");
+        newData[0] = "data:audio/ogg;";
+        newData = newData[0] + newData[1];
+        text = newData;
+        console.log(`${sender.name} sent an audio`);
+      } else {
+        console.log(`${sender.name} sent "${text}"`);
+      }
+      const message = await createMessage(sender, text);
       io.emit(NEW_MESSAGE, message);
     } catch (error) {
-      console.error("Something went wrong..");
+      console.error("Something went wrong..", error);
     }
   });
 

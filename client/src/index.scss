@@ -39,7 +39,7 @@ body,
     flex-direction: column;
 
     .chat-header {
-      padding: 10px;
+      padding: 10px 10px 0px 10px;
       border-bottom: 2px solid #f4f7f6;
       display: flex;
       align-items: center;
@@ -438,6 +438,25 @@ body,
   display: none;
 }
 
+span.microphone:active {
+  background: whitesmoke;
+  z-index: 1000;
+  -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+  -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+  box-shadow: inset 0px 0px 5px #c1c1c1;
+  outline: none;
+
+  animation: pulse-animation 1s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 222, 89, 0.636);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(23, 154, 29, 0.2);
+  }
+}
 .profile {
   @include avatar(60px);
   cursor: pointer;

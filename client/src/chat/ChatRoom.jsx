@@ -17,17 +17,26 @@ const renderMessage = (message, index, showSender, fontSize) => {
     return null;
   }
 
+  const isAudio = message.text.includes("data:audio/ogg;");
+
   return (
     <li
       key={index}
       className={`clearfix ${message.fromMe ? "flush-right" : ""}`}
     >
-      <Message
-        mine={message.fromMe}
-        text={message.text}
-        showSender={showSender}
-        fontSize={fontSize}
-      />
+      {isAudio ? (
+        <audio controls>
+          <source src={message.text} type="audio/ogg" />
+          Your browser does not support the audio element.
+        </audio>
+      ) : (
+        <Message
+          mine={message.fromMe}
+          text={message.text}
+          showSender={showSender}
+          fontSize={fontSize}
+        />
+      )}
       {showSender && (
         <React.Fragment>
           {message.fromMe ? (

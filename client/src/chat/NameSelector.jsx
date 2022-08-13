@@ -19,7 +19,7 @@ const NameSelector = ({ participantName, updateParticipantProfile }) => {
     } else if (name) {
       handleProfileUpdate();
     }
-  }, [isNameEdit]);
+  }, [isNameEdit, name]);
 
   const handleProfileUpdate = () => {
     localStorage.setItem("name", name);
