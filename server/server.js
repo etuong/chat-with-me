@@ -17,7 +17,7 @@ const {
   getMessages,
   createMessage,
   deleteAllMessages,
-} = require("./Controllers/MessageController");
+} = require("./controllers/MessageController");
 
 app.use(cors());
 app.get("/", (_, res) => {
