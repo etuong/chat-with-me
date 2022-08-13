@@ -67,15 +67,13 @@ const SendBox = (props) => {
       <form onSubmit={handleSubmit}>
         <div className="input-group mb-0">
           <div
-            className="input-group-prepend"
+            className="microphone"
             onMouseDown={(_e) => handleAudioMouseDown()}
             onMouseUp={(_e) => handleAudioMouseUp()}
             onTouchStart={(_e) => handleAudioMouseDown()}
             onTouchEnd={(_e) => handleAudioMouseUp()}
           >
-            <span className="input-group-text microphone">
-              <i className="fa fa-microphone"></i>
-            </span>
+            <i className="fa fa-microphone"></i>
           </div>
           <textarea
             ref={props.messageBoxRef}
@@ -84,10 +82,8 @@ const SendBox = (props) => {
             onKeyUp={props.stopTyping}
             onKeyDown={onKeyDown}
           />
-          <div className="input-group-prepend" onClick={handleSubmit}>
-            <span className="input-group-text">
-              <i className="fa fa-send"></i>
-            </span>
+          <div className="deliver" onClick={handleSubmit}>
+            <i className="fa fa-send"></i>
           </div>
         </div>
       </form>

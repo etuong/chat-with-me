@@ -3,7 +3,7 @@ import Popup from "reactjs-popup";
 
 const Questions = () => (
   <Popup
-    contentStyle={{ width: "280px" }}
+    contentStyle={{ width: "320px" }}
     trigger={
       <button className="btn btn-outline-primary">
         <i className="fa fa-question"></i>
@@ -21,9 +21,10 @@ const Questions = () => (
         <div className="content">
           <p>
             Chat With Me is a public chatroom where any participant can send
-            messages, images, emojis, and even selfies! Online communication can
-            help young people build and develop social skills and gives them a
-            platform to share their skills and help each other out.
+            text messages, audio voicemails, images, emojis, and even selfies!
+            Online communication can help young people build and develop social
+            skills and gives them a platform to share their skills and help each
+            other out.
           </p>
           <p>
             The first time you enter the chatroom you will be given a random
@@ -33,8 +34,8 @@ const Questions = () => (
             will give you a larger header.
           </p>
           <p>
-            Messages are never stored anywhere. They will be deleted every time
-            my server restarts. And this happens every 30 minutes of inactivity.
+            Messages are stored on my Mongo database server and will be deleted
+            once in a while. Your information is absolutely anonymous.
           </p>
           <p>
             This web app was designed and built by{" "}
@@ -61,6 +62,7 @@ const Questions = () => (
             <ul>
               <li>React</li>
               <li>Node.js and Express</li>
+              <li>MongoDB</li>
               <li>Socket.io</li>
               <li>Cloudinary</li>
             </ul>

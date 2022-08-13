@@ -438,9 +438,18 @@ body,
   display: none;
 }
 
-span.microphone {
-  width: 45px;
-  padding: 0.4rem 1rem;
+@mixin send-tools {
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+div.microphone {
+  @include send-tools;
+  margin-right: -1px;
 
   &:active {
     background: whitesmoke;
@@ -451,6 +460,11 @@ span.microphone {
     outline: none;
     animation: pulse-animation 1s infinite;
   }
+}
+
+div.deliver {
+  @include send-tools;
+  margin-left: -1px;
 }
 
 @keyframes pulse-animation {
