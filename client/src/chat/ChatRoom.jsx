@@ -47,7 +47,6 @@ const Chat = () => {
   const [showPreferences, setShowPreferences] = useState(true);
   const [showSender, setShowSender] = useState(true);
   const [fontSize, setFontSize] = useState("16px");
-  const [openWelcomeDlg, setOpenWelcomeDlg] = useState(true);
 
   const {
     messages,
@@ -83,7 +82,7 @@ const Chat = () => {
     var blob = new Blob(
       [
         messages
-          .map((m) => `(${m.dateTime}) ${m.sender?.name}: ${m.text}`)
+          .map((m) => `(${m.dateTime}) ${m.senderName}: ${m.text}`)
           .join("\r\n"),
       ],
       {

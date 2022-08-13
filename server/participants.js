@@ -8,19 +8,9 @@ class Participant {
   }
 }
 
-Participant.prototype.toString = function() {
-  return `Name: ${this.name}, Profile Picture: ${this.profilePic}`;
-};
-
 const participants = [];
 
 const addParticipant = (id, name, profilePic) => {
-  const existingParticipant = participants.find(
-    (participant) => participant.name === name
-  );
-
-  // if (existingParticipant) return { error: "Participant name is taken." };
-
   const participant = new Participant(id, name, profilePic);
 
   participants.push(participant);

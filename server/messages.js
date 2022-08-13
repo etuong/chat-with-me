@@ -23,11 +23,7 @@ const removeMessage = (id) => {
   if (index !== -1) return messages.splice(index, 1)[0];
 };
 
-const getMessage = (id) => messages.find((message) => message.id === id);
-
-const getMessages = () => messages;
-
 const deleteAllMessages = () => {
   messages = [];
 };
-module.exports = { addMessage, getMessages, deleteAllMessages };
+module.exports = { addMessage, deleteAllMessages };

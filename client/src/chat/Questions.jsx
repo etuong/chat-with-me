@@ -20,7 +20,7 @@ const Questions = () => (
         <div className="header">Chat With Me!</div>
         <div className="content">
           <p>
-            Chat With Me with a public chatroom where any participant can send
+            Chat With Me is a public chatroom where any participant can send
             messages, images, emojis, and even selfies! Online communication can
             help young people build and develop social skills and gives them a
             platform to share their skills and help each other out.

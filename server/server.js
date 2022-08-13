@@ -1,17 +1,24 @@
+const path = require("node:path");
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
+
 const express = require("express");
-const logger = require("morgan");
 const cors = require("cors");
 const app = express();
 const server = require("http").createServer(app);
+
 const {
   addParticipant,
   removeParticipant,
   getParticipant,
   getParticipants,
 } = require("./participants");
-const { addMessage, getMessages, deleteAllMessages } = require("./messages");
 
-// app.use(logger("dev"));
+const {
+  getMessages,
+  createMessage,
+  deleteAllMessages,
+} = require("./Controllers/MessageController");
+
 app.use(cors());
 app.get("/", (_, res) => {
   res.redirect("https://spiffy-crostata-ab1518.netlify.app/");
@@ -23,11 +30,6 @@ app.use(function (_, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
-});
-const port = process.env.PORT || 8081;
-
-server.listen(port, () => {
-  console.log(`Server is listening on port: ${port}`);
 });
 
 const USER_JOIN = "USER_JOIN";
@@ -64,12 +66,15 @@ io.on("connection", (socket) => {
     }
   });
 
-  // Payload data contains the sender ID and text
-  socket.on(NEW_MESSAGE, (data) => {
+  socket.on(NEW_MESSAGE, async (data) => {
     const sender = getParticipant(data.senderId);
-    const message = addMessage(sender, data.text);
-    console.log(`${message.sender?.name} sent "${message.text}"`);
-    io.emit(NEW_MESSAGE, message);
+    try {
+      const message = await createMessage(sender, data.text);
+      console.log(`${message.senderName} sent "${message.text}"`);
+      io.emit(NEW_MESSAGE, message);
+    } catch (error) {
+      console.error("Something went wrong..");
+    }
   });
 
   socket.on(UPDATE_PARTICIPANT_PROFILE, (updatedParticipant) => {
@@ -104,15 +109,30 @@ app.get("/participants", (req, res) => {
   return res.json({ participants });
 });
 
-app.get("/messages", (req, res) => {
-  const messages = getMessages();
+app.get("/messages", async (_req, res) => {
+  const messages = await getMessages();
   return res.json({ messages });
 });
 
 app.get("/delete-all-messages", (_req, res) => {
-  deleteAllMessages();
-  res.status(200).send("All messages have been deleted!");
+  deleteAllMessages().then(() => {
+    res.status(200).send("All messages have been deleted!");
+  });
 });
+
+const mongoose = require("mongoose");
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("connected to database");
+    const port = process.env.PORT || 8081;
+    server.listen(port, () => {
+      console.log(`Server is listening on port: ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 process.on("exit", function (code) {
   server.close();

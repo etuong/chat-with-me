@@ -60,16 +60,23 @@ const useChat = () => {
         }
       });
 
-      socketRef.current.on(NEW_MESSAGE, ({ sender, text, dateTime }) => {
-        const incomingMessage = {
-          sender,
-          text,
-          dateTime,
-          fromMe: sender.id === socketRef.current.id,
-        };
+      socketRef.current.on(
+        NEW_MESSAGE,
+        ({ senderName, senderPic, senderId, text, dateTime }) => {
+          const incomingMessage = {
+            senderName,
+            senderPic,
+            text,
+            dateTime,
+            fromMe: senderId === socketRef.current.id,
+          };
 
-        setMessages((currentMessages) => [...currentMessages, incomingMessage]);
-      });
+          setMessages((currentMessages) => [
+            ...currentMessages,
+            incomingMessage,
+          ]);
+        }
+      );
 
       socketRef.current.on(START_TYPING, (typingInfo) => {
         if (typingInfo && typingInfo.senderId !== socketRef.current.id) {
