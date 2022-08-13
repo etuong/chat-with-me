@@ -438,15 +438,19 @@ body,
   display: none;
 }
 
-span.microphone:active {
-  background: whitesmoke;
-  z-index: 1000;
-  -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-  -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-  box-shadow: inset 0px 0px 5px #c1c1c1;
-  outline: none;
+span.microphone {
+  width: 45px;
+  padding: 0.4rem 1rem;
 
-  animation: pulse-animation 1s infinite;
+  &:active {
+    background: whitesmoke;
+    z-index: 1000;
+    -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+    -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+    box-shadow: inset 0px 0px 5px #c1c1c1;
+    outline: none;
+    animation: pulse-animation 1s infinite;
+  }
 }
 
 @keyframes pulse-animation {

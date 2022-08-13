@@ -23,7 +23,6 @@ const SendBox = (props) => {
   const handleAudioMouseDown = () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       const mediaRecorder = new MediaRecorder(stream);
-
       mediaRecorder.start();
 
       const audioChunks = [];
@@ -33,7 +32,7 @@ const SendBox = (props) => {
       });
 
       mediaRecorder.addEventListener("stop", function () {
-        console.log(audioChunks)
+        console.log(audioChunks);
         if (audioChunks[0].size < 1000) {
           return;
         }
@@ -71,6 +70,8 @@ const SendBox = (props) => {
             className="input-group-prepend"
             onMouseDown={(_e) => handleAudioMouseDown()}
             onMouseUp={(_e) => handleAudioMouseUp()}
+            onTouchStart={(_e) => handleAudioMouseDown()}
+            onTouchEnd={(_e) => handleAudioMouseUp()}
           >
             <span className="input-group-text microphone">
               <i className="fa fa-microphone"></i>
