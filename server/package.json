@@ -10,6 +10,7 @@
     "author": "Ethan Uong",
     "dependencies": {
         "cors": "^2.8.5",
+        "dotenv": "^16.0.1",
         "express": "^4.16.4",
         "mongoose": "^6.5.2",
         "socket.io": "~4.4.1",
