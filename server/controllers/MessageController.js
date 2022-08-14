@@ -6,7 +6,7 @@ const getMessages = async () => {
   return messages;
 };
 
-const createMessage = async (sender, text) => {
+const createMessage = async (sender, text, isAudio = false) => {
   const dateTime = new Date().toLocaleDateString("en-us", {
     timeZone: "America/Los_Angeles",
     year: "numeric",
@@ -23,6 +23,7 @@ const createMessage = async (sender, text) => {
     text,
     senderName,
     senderPic,
+    isAudio,
   };
   await Message.create(message);
 

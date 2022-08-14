@@ -17,16 +17,15 @@ const renderMessage = (message, index, showSender, fontSize) => {
     return null;
   }
 
-  const isAudio = message.text.includes("data:audio/mp3;");
-
   return (
     <li
       key={index}
       className={`clearfix ${message.fromMe ? "flush-right" : ""}`}
     >
-      {isAudio ? (
+      {message.isAudio ? (
         <audio controls>
           <source src={message.text} type="audio/mp3" />
+          <source src={message.text} type="audio/wav" />
           Your browser does not support the audio element.
         </audio>
       ) : (
@@ -91,7 +90,11 @@ const Chat = () => {
     var blob = new Blob(
       [
         messages
-          .map((m) => `(${m.dateTime}) ${m.senderName}: ${m.text}`)
+          .map((m) =>
+            m.isAudio
+              ? `(${m.dateTime}) ${m.senderName} sent an audio`
+              : `(${m.dateTime}) ${m.senderName}: ${m.text}`
+          )
           .join("\r\n"),
       ],
       {

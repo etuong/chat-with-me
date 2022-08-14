@@ -20,6 +20,9 @@ const messageModel = new Schema(
       type: String,
       required: true,
     },
+    isAudio: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );
