@@ -72,7 +72,7 @@ io.on("connection", (socket) => {
     try {
       if (text.includes("data:application/octet-stream;base64")) {
         let newData = text.split(";");
-        newData[0] = "data:audio/ogg;";
+        newData[0] = "data:audio/mp3;";
         newData = newData[0] + newData[1];
         text = newData;
         console.log(`${sender.name} sent an audio`);

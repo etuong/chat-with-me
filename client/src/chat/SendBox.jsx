@@ -42,12 +42,6 @@ const SendBox = (props) => {
         fileReader.onloadend = function () {
           const base64VoiceMsgString = fileReader.result;
           props.handleSendMessage(base64VoiceMsgString);
-
-          // var newData = base64String.split(";");
-          // newData[0] = "data:audio/ogg;";
-          // newData = newData[0] + newData[1];
-          // var audio = new Audio(newData);
-          // audio.play();
         };
       });
 
