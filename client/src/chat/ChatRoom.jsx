@@ -17,7 +17,7 @@ const renderMessage = (message, index, showSender, fontSize) => {
     return null;
   }
 
-  const isAudio = message.text.includes("data:audio/mp3;");
+  const isAudio = message.text.includes("data:application/octet-stream");
 
   return (
     <li
