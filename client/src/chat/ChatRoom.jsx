@@ -17,7 +17,7 @@ const renderMessage = (message, index, showSender, fontSize) => {
     return null;
   }
 
-  const isAudio = message.text.includes("data:audio/wav;");
+  const isAudio = message.text.includes("data:audio/mp3;");
 
   return (
     <li
@@ -26,7 +26,7 @@ const renderMessage = (message, index, showSender, fontSize) => {
     >
       {isAudio ? (
         <audio controls>
-          <source src={message.text} type="audio/wav" />
+          <source src={message.text} type="audio/mp3" />
           Your browser does not support the audio element.
         </audio>
       ) : (

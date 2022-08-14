@@ -71,11 +71,11 @@ io.on("connection", (socket) => {
     let text = data.text;
     try {
       if (text.includes("data:application/octet-stream;base64")) {
-        // let newData = text.split(";");
-        // newData[0] = "data:audio/wav;";
-        // newData = newData[0] + newData[1];
-        // text = newData;
-        // console.log(`${sender.name} sent an audio`);
+        let newData = text.split(";");
+        newData[0] = "data:audio/mp3;";
+        newData = newData[0] + newData[1];
+        text = newData;
+        console.log(`${sender.name} sent an audio`);
       } else {
         console.log(`${sender.name} sent "${text}"`);
       }
