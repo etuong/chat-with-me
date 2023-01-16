@@ -2,7 +2,7 @@
 
 > A chatting web app built with React, Express, Socket.io, and MongoDB
 
-[Click here to start chatting!](https://chat-with-ethan.herokuapp.com/)
+[Click here to start chatting!](https://chat-with-ethan.netlify.app/)
 
 <img src="screenshot.png" width="400">
 

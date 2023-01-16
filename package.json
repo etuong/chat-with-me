@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "@types/socket.io-client": "^3.0.0"
-  },
-  "dependencies": {
-    "dotenv": "^16.0.1"
-  }
-}

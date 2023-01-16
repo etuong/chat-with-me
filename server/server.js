@@ -1,4 +1,4 @@
-const path = require("node:path");
+const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 
 const express = require("express");
@@ -21,7 +21,7 @@ const {
 
 app.use(cors());
 app.get("/", (_, res) => {
-  res.redirect("https://spiffy-crostata-ab1518.netlify.app/");
+  res.redirect("https://chat-with-ethan.netlify.app//");
 });
 app.use(function (_, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -41,10 +41,7 @@ const UPDATE_PARTICIPANT_PROFILE = "UPDATE_PARTICIPANT_PROFILE";
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: [
-      "http://localhost:3000",
-      "https://spiffy-crostata-ab1518.netlify.app",
-    ],
+    origin: ["http://localhost:3000", "https://chat-with-ethan.netlify.app"],
     credentials: true,
   },
   transports: ["polling", "websocket"],

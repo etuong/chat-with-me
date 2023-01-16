@@ -13,7 +13,7 @@ const UPDATE_PARTICIPANT_PROFILE = "UPDATE_PARTICIPANT_PROFILE";
 const SOCKET_SERVER_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
     ? "http://localhost:8081"
-    : "https://chat-with-ethan.herokuapp.com";
+    : "https://chat-with-me.onrender.com";
 
 const useChat = () => {
   const [messages, setMessages] = useState([]);
